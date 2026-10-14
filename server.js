@@ -32,45 +32,63 @@ const EXCLUDED_DIRS = new Set([
 app.disable('x-powered-by');
 app.use(express.json({ limit: '8mb' }));
 
-// The API key is supplied by the user on each request. This server does not save API keys.
+// Server-side fallback: environment keys stay private on Render.
+const PROVIDER_CONFIG = {
+  gemini: { env: 'GEMINI_API_KEY', model: process.env.GEMINI_MODEL || 'gemini-2.5-flash' },
+  groq: { env: 'GROQ_API_KEY', model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile' },
+  openrouter: { env: 'OPENROUTER_API_KEY', model: process.env.OPENROUTER_MODEL || 'openrouter/free' },
+  mistral: { env: 'MISTRAL_API_KEY', model: process.env.MISTRAL_MODEL || 'mistral-small-latest' }
+};
+const FALLBACK_ORDER = ['gemini', 'groq', 'openrouter', 'mistral'];
+
 app.post('/api/chat', async (req, res) => {
   const body = req.body || {};
-  const provider = String(body.provider || '').toLowerCase();
-  const endpoint = CHAT_PROVIDERS[provider];
-  const apiKey = typeof body.apiKey === 'string' ? body.apiKey.trim() : '';
-  const model = typeof body.model === 'string' ? body.model.trim() : '';
   const messages = body.messages;
-
-  if (!endpoint) return res.status(400).json({ error: { message: 'এই provider সমর্থিত নয়। Settings থেকে সমর্থিত provider বেছে নিন।' } });
-  if (!apiKey) return res.status(400).json({ error: { message: 'API key দিন।' } });
-  if (!model) return res.status(400).json({ error: { message: 'Model ID দিন।' } });
   if (!Array.isArray(messages) || messages.length === 0 || messages.length > 100) {
     return res.status(400).json({ error: { message: 'চ্যাট বার্তার তালিকা সঠিক নয়।' } });
   }
-
-  try {
-    const headers = {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json'
-    };
-    if (provider === 'openrouter') {
-      headers['HTTP-Referer'] = `https://${req.get('host') || 'localhost'}`;
-      headers['X-Title'] = 'AI Developer Workspace';
+  // If fallback=true, try all providers with configured server environment keys.
+  const requested = String(body.provider || 'gemini').toLowerCase();
+  const order = body.fallback === true ? [...new Set([requested, ...FALLBACK_ORDER])] : [requested];
+  const failures = [];
+  for (const provider of order) {
+    const endpoint = CHAT_PROVIDERS[provider];
+    const config = PROVIDER_CONFIG[provider];
+    if (!endpoint || !config) continue;
+    const apiKey = (process.env[config.env] || (provider === requested && typeof body.apiKey === 'string' ? body.apiKey : '')).trim();
+    if (!apiKey) { failures.push(provider + ': API key configured নেই'); continue; }
+    const model = (provider === requested && typeof body.model === 'string' && body.model.trim()) || config.model;
+    try {
+      const headers = { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' };
+      if (provider === 'openrouter') {
+        headers['HTTP-Referer'] = `https://${req.get('host') || 'localhost'}`;
+        headers['X-Title'] = 'AI Developer Workspace';
+      }
+      const upstream = await fetch(endpoint, {
+        method: 'POST', headers,
+        body: JSON.stringify({ model, messages }),
+        signal: AbortSignal.timeout(45000)
+      });
+      const responseText = await upstream.text();
+      if (upstream.ok) {
+        console.log(`AI provider success: ${provider}`);
+        res.status(upstream.status);
+        res.set('Content-Type', upstream.headers.get('content-type') || 'application/json; charset=utf-8');
+        return res.send(responseText);
+      }
+      // Retry another provider only for rate/availability/auth/config errors.
+      failures.push(`${provider}: HTTP ${upstream.status} ${responseText.slice(0, 220)}`);
+      console.warn(`AI provider failed: ${provider} HTTP ${upstream.status}`);
+      if (![401, 402, 403, 404, 408, 413, 429, 500, 502, 503, 504].includes(upstream.status)) {
+        res.status(upstream.status); res.type('application/json'); return res.send(responseText);
+      }
+    } catch (error) {
+      failures.push(`${provider}: ${error.message}`);
+      console.warn(`AI provider connection failed: ${provider}: ${error.message}`);
     }
-
-    const upstream = await fetch(endpoint, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ model, messages })
-    });
-    const responseText = await upstream.text();
-    res.status(upstream.status);
-    res.set('Content-Type', upstream.headers.get('content-type') || 'application/json; charset=utf-8');
-    res.send(responseText);
-  } catch (error) {
-    console.error('Provider request failed:', error.message);
-    res.status(502).json({ error: { message: 'AI provider-এ সংযোগ করা যায়নি। নেটওয়ার্ক ও provider settings পরীক্ষা করুন।' } });
   }
+  console.error('All configured AI providers failed:', failures.join(' | '));
+  return res.status(503).json({ error: { message: 'সব AI provider ব্যর্থ হয়েছে বা API key সেট করা নেই। Render Environment-এ GEMINI_API_KEY, GROQ_API_KEY বা OPENROUTER_API_KEY যোগ করুন। Logs-এ provider error দেখুন।' } });
 });
 
 const zipUpload = multer({
