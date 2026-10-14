@@ -463,7 +463,7 @@ a{color:var(--accent2);text-decoration:none}
 <!-- KEY MODAL -->
 <div class="modal-bg" id="keyModal">
   <div class="modal">
-    <h2>🔑 Gemini API Key দিন</h2>
+    <h2>🔑 Gemini API Key দ����������</h2>
     <p>শুধুমাত্র একটি <strong>Google Gemini</strong> free API key দিলেই সব টুল কাজ করবে। Key শুধু আপনার browser-এ থাকে, কোথাও পাঠানো হয় না।</p>
     <label>Gemini API Key</label>
     <input type="password" id="apiKeyInput" placeholder="AIzaSy..." autocomplete="off" />
@@ -490,7 +490,7 @@ a{color:var(--accent2);text-decoration:none}
       <div class="logo-icon">✦</div>
       AI Toolkit
     </div>
-    <span class="model-tag">Gemini 2.5 Flash · Free</span>
+    <span class="model-tag">Gemini 3.8 Flash · Free</span>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
     <button class="key-pill" onclick="openModal()">
@@ -529,7 +529,7 @@ a{color:var(--accent2);text-decoration:none}
     <div class="tool-group">
       <div class="tool-group-label">কোড টুলস</div>
       <button class="tool-btn" data-tool="codereview" onclick="switchTool('codereview',this)">
-        <span class="tool-icon" style="background:#1a1f35">🔍</span> Code Review
+        <span class="tool-icon" style="background:#1a1f35">����</span> Code Review
       </button>
       <button class="tool-btn" data-tool="bugfind" onclick="switchTool('bugfind',this)">
         <span class="tool-icon" style="background:#2a1a1f">🐛</span> Bug Finder
@@ -863,47 +863,47 @@ a{color:var(--accent2);text-decoration:none}
         <div class="info-card">
           <h3>💬 AI চ্যাট</h3>
           <p>যেকোনো প্রশ্ন করুন বাংলায় বা ইংরেজিতে।</p>
-          <span class="tag">Gemini 2.5 Flash</span>
+          <span class="tag">Gemini 2.0 Flash</span>
         </div>
         <div class="info-card">
           <h3>📋 সংক্ষেপ</h3>
           <p>বড় article, রিপোর্ট, ডকুমেন্ট সংক্ষিপ্ত করুন।</p>
-          <span class="tag">Gemini 2.5 Flash</span>
+          <span class="tag">Gemini 2.0 Flash</span>
         </div>
         <div class="info-card">
           <h3>🌐 অনুবাদ</h3>
           <p>৮+ ভাষায় যেকোনো টেক্সট অনুবাদ।</p>
-          <span class="tag">Gemini 2.5 Flash</span>
+          <span class="tag">Gemini 2.0 Flash</span>
         </div>
         <div class="info-card">
           <h3>✏️ Grammar Fix</h3>
           <p>English ও বাংলা লেখা সংশোধন ও উন্নত।</p>
-          <span class="tag">Gemini 2.5 Flash</span>
+          <span class="tag">Gemini 2.0 Flash</span>
         </div>
         <div class="info-card">
           <h3>📧 Email Writer</h3>
           <p>Professional email তৈরি করুন সহজে।</p>
-          <span class="tag">Gemini 2.5 Flash</span>
+          <span class="tag">Gemini 2.0 Flash</span>
         </div>
         <div class="info-card">
           <h3>🔍 Code Review</h3>
           <p>কোডের মান, style ও best practices চেক।</p>
-          <span class="tag">Gemini 2.5 Flash</span>
+          <span class="tag">Gemini 2.0 Flash</span>
         </div>
         <div class="info-card">
           <h3>🐛 Bug Finder</h3>
           <p>কোডে bugs ও ত্রুটি খুঁজে সমাধান দিন।</p>
-          <span class="tag">Gemini 2.5 Flash</span>
+          <span class="tag">Gemini 2.0 Flash</span>
         </div>
         <div class="info-card">
           <h3>📖 Code Explain</h3>
           <p>কোড সহজ বাংলায় বুঝুন।</p>
-          <span class="tag">Gemini 2.5 Flash</span>
+          <span class="tag">Gemini 2.0 Flash</span>
         </div>
         <div class="info-card">
           <h3>🖼️ Image Analyze</h3>
           <p>ছবি upload করে AI দিয়ে বিশ্লেষণ করুন।</p>
-          <span class="tag">Gemini 2.5 Flash Vision</span>
+          <span class="tag">Gemini 2.0 Flash Vision</span>
         </div>
       </div>
     </div>
@@ -915,7 +915,7 @@ a{color:var(--accent2);text-decoration:none}
 // ============================================================
 // STATE
 // ============================================================
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gemini-3.8-flash';
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/';
 let chatHistory = [];
 let imgBase64 = null;
@@ -1173,7 +1173,7 @@ async function runGrammar() {
   setBtn('gramBtn', true);
   setResult('gramResult', 'সংশোধন হচ্ছে...', true);
   try {
-    const sys = 'তুমি একজন ভাষা বিশেষজ্ঞ। নিচের লেখাটি ' + modeMap[mode] + ' শুধু সংশোধিত লেখা দাও।';
+    const sys = 'তুমি একজন ভাষা বিশেষজ্ঞ�� ন������ের লেখাটি ' + modeMap[mode] + ' শুধু সংশোধিত লেখা দাও।';
     const r = await callGemini(sys, text);
     setResult('gramResult', r);
   } catch(e) { setResult('gramResult', '❌ ' + e.message, true); }
