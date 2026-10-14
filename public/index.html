@@ -1,152 +1,1336 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0b0d12" />
-  <title>AI Developer Workspace</title>
-  <style>
-    :root{color-scheme:dark;--page:#0b0d12;--side:#10131b;--panel:#151923;--line:#252b38;--text:#f3f5f8;--muted:#929aaa;--accent:#8b7cff;--accent2:#6c5ce7;--green:#49d3a1;--red:#ff707d;--shadow:0 24px 80px rgba(0,0,0,.42)}
-    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}body{min-width:320px;overflow:hidden;color:var(--text);background:var(--page);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Bengali",sans-serif}button,input,textarea,select{font:inherit}button{color:inherit}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.app{display:flex;width:100%;height:100dvh;min-height:0}
-    .sidebar{position:relative;z-index:20;display:flex;flex:0 0 292px;flex-direction:column;min-height:0;padding:18px 14px 12px;background:linear-gradient(180deg,#11141d,#0e1118);border-right:1px solid var(--line)}.brand{display:flex;align-items:center;gap:11px;padding:2px 5px 19px}.brandmark{display:grid;width:38px;height:38px;place-items:center;border:1px solid #a99dff55;border-radius:13px;background:linear-gradient(145deg,#342b68,#191d31 75%);color:#c7bfff;font-size:19px}.brandname{font-size:14px;font-weight:720}.brandtag{margin-top:3px;color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.16em}.icon{display:inline-grid;width:36px;height:36px;flex:0 0 36px;place-items:center;border:1px solid var(--line);border-radius:9px;background:#161a24;color:#c5cad4;cursor:pointer}.icon:hover{background:#202532}.mobile-close{display:none;margin-left:auto}.newchat{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;border:1px solid #a599ff66;border-radius:11px;background:linear-gradient(135deg,#7667ec,#5548c7);color:#fff;font-size:13px;font-weight:680;cursor:pointer}.search{position:relative;margin:17px 0 18px}.search span{position:absolute;top:50%;left:12px;transform:translateY(-50%);color:#788193}.search input{width:100%;height:38px;padding:0 11px 0 34px;border:1px solid var(--line);border-radius:9px;background:#151923;color:var(--text);font-size:12px}.history-head{display:flex;justify-content:space-between;padding:0 7px 8px;color:#858d9d;font-size:10px;font-weight:750;letter-spacing:.13em;text-transform:uppercase}.history-count{color:#6f7888;letter-spacing:0}.history{flex:1;min-height:0;overflow:auto;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:#303746 transparent}.history-empty{padding:18px 10px;color:#788091;font-size:12px;line-height:1.6;text-align:center}.history-item{display:flex;gap:3px;margin:2px 0;padding:2px;border:1px solid transparent;border-radius:9px}.history-item:hover{background:#ffffff09}.history-item.active{border-color:#9386ff38;background:#8576ff1a}.history-open{display:flex;min-width:0;flex:1;flex-direction:column;gap:4px;padding:8px;border:0;border-radius:7px;background:transparent;text-align:left;cursor:pointer}.history-title{overflow:hidden;color:#d7dbe4;font-size:12px;text-overflow:ellipsis;white-space:nowrap}.history-meta{color:#788091;font-size:10px}.history-delete{align-self:center;width:29px;height:29px;border:0;border-radius:7px;background:transparent;color:#737c8b;cursor:pointer;opacity:0}.history-item:hover .history-delete,.history-item:focus-within .history-delete{opacity:1}.history-delete:hover{background:#ff707d1f;color:var(--red)}.sidefoot{margin-top:8px;padding:12px 7px 2px;border-top:1px solid var(--line)}.save-note{display:flex;align-items:center;gap:8px;color:#8992a1;font-size:10px}.save-dot{width:7px;height:7px;border-radius:50%;background:var(--green)}.export{margin-top:10px;padding:5px 0;border:0;background:transparent;color:#9fa7b5;font-size:11px;cursor:pointer}.main{display:flex;position:relative;flex:1;flex-direction:column;min-width:0;min-height:0;background:radial-gradient(ellipse at 54% -15%,#594dab1f,transparent 48%),var(--page)}.topbar{display:flex;flex:0 0 66px;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(15px,3vw,34px);border-bottom:1px solid #ffffff0e;background:#0c0e14c7;backdrop-filter:blur(12px)}.top-left{display:flex;min-width:0;align-items:center;gap:12px}.chat-title{overflow:hidden;max-width:min(50vw,540px);color:#e4e7ee;font-size:13px;font-weight:650;text-overflow:ellipsis;white-space:nowrap}.model-line{display:flex;align-items:center;gap:7px;margin-top:4px;color:#8c95a5;font-size:10px}.model-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}.settings-btn{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px;border:1px solid var(--line);border-radius:9px;background:#151923;color:#cbd0da;font-size:11px;cursor:pointer}.messages{display:flex;flex:1;flex-direction:column;gap:20px;overflow-y:auto;padding:32px clamp(16px,4vw,42px);scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#303746 transparent}.welcome{display:flex;width:min(820px,100%);flex:1;flex-direction:column;align-items:center;justify-content:center;align-self:center;padding:22px 0 32px;text-align:center}.welcome-icon{display:grid;width:62px;height:62px;place-items:center;margin-bottom:20px;border:1px solid #a497ff4d;border-radius:21px;background:linear-gradient(145deg,#7062dd3d,#292d488c);color:#c9c1ff;font-size:28px}.welcome h1{margin:0;color:#f3f4f8;font-size:clamp(23px,3vw,33px);font-weight:720;letter-spacing:-.035em}.welcome p{max-width:520px;margin:11px 0 25px;color:#959dad;font-size:13px;line-height:1.75}.suggestions{display:grid;width:min(620px,100%);grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.suggestion{min-height:68px;padding:12px 14px;border:1px solid #252b38;border-radius:12px;background:#151923c7;color:#d2d6df;text-align:left;font-size:12px;line-height:1.5;cursor:pointer}.suggestion:hover{border-color:#9386ff75;background:#1a1e2a}.suggestion span{display:block;margin-bottom:4px;color:#9c91ff;font-size:11px;font-weight:700}.row{display:flex;width:min(900px,100%);align-items:flex-start;gap:12px;align-self:center}.row.user{flex-direction:row-reverse}.avatar{display:grid;width:31px;height:31px;flex:0 0 31px;place-items:center;border:1px solid #343a49;border-radius:10px;background:#191d29;color:#c4bbff;font-size:10px;font-weight:760}.row.user .avatar{border-color:#7e6ff459;background:linear-gradient(145deg,#6255cf,#40399a);color:#fff}.bubble{max-width:min(790px,calc(100% - 45px));padding:12px 15px;border:1px solid #252b37;border-radius:4px 14px 14px 14px;background:#141821;color:#e2e5eb;font-size:13px;line-height:1.78;overflow-wrap:anywhere}.row.user .bubble{border-color:#7e6ff42e;border-radius:14px 4px 14px 14px;background:#211f36;color:#f0effa}.bubble.error{border-color:#ff707d4d;background:#501f2959;color:#ffbdc3}.bubble.pending{color:#aab1bf}.bubble strong{color:#fff}.bubble code{padding:2px 5px;border:1px solid #303746;border-radius:5px;background:#202531;color:#d5cfff;font-family:ui-monospace,monospace;font-size:.92em}.bubble pre{overflow:auto;margin:10px 0 3px;padding:0;border:1px solid #303746;border-radius:9px;background:#0b0e14}.codehead{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #252b38;color:#9099aa;font-size:10px}.copy,.speak{padding:4px 8px;border:1px solid #333a49;border-radius:6px;background:#191e28;color:#cbd0da;font-size:10px;cursor:pointer}.bubble pre code{display:block;padding:12px;border:0;border-radius:0;background:transparent;color:#e2e7ef;white-space:pre}.msg-files{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.msg-image{width:auto;max-width:min(230px,100%);max-height:220px;border:1px solid #3b4050;border-radius:9px;object-fit:contain;background:#0a0d13}.zip-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid #554ba3;border-radius:8px;background:#28234a;color:#d9d3ff;font-size:10px}.bubble-toolbar{display:flex;justify-content:flex-end;margin-top:7px}.composer-foot{padding:10px clamp(14px,4vw,38px) 14px;border-top:1px solid #ffffff0e;background:#0c0e14bf}.preview-row{display:flex;width:min(900px,100%);flex-wrap:wrap;gap:8px;margin:0 auto 8px}.attachment-chip{position:relative;display:flex;align-items:center;gap:7px;max-width:100%;padding:5px 30px 5px 7px;border:1px solid #343a49;border-radius:9px;background:#171b26;color:#cbd0da;font-size:10px}.attachment-chip img{width:34px;height:34px;border-radius:6px;object-fit:cover}.attachment-chip .remove{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:21px;height:21px;border:0;border-radius:5px;background:#252a36;color:#bdc4d0;cursor:pointer}.composer{display:flex;width:min(900px,100%);align-items:flex-end;gap:8px;margin:0 auto;padding:8px;border:1px solid #303645;border-radius:14px;background:#151923;box-shadow:0 10px 36px #0002}.composer:focus-within{border-color:#9082ff9e;box-shadow:0 0 0 3px #7b6beb1a}.prompt{display:block;width:100%;min-height:40px;max-height:180px;resize:none;padding:10px 8px;border:0;outline:none;background:transparent;color:var(--text);font-size:13px;line-height:1.55}.prompt::placeholder{color:#788192}.tool{display:grid;width:38px;height:38px;flex:0 0 38px;place-items:center;border:1px solid transparent;border-radius:10px;background:transparent;color:#b5bdcb;font-size:17px;cursor:pointer}.tool:hover{background:#252a36;color:#fff}.tool.recording{background:#593340;color:#ff9da6;animation:pulse 1s infinite}.send{display:grid;width:38px;height:38px;flex:0 0 38px;place-items:center;border:0;border-radius:10px;background:var(--accent2);color:#fff;font-size:17px;cursor:pointer}.send:disabled{opacity:.48;cursor:wait}.note{width:min(900px,100%);margin:8px auto 0;color:#717a8a;font-size:10px;text-align:center}.modal{position:fixed;z-index:100;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:#000b;backdrop-filter:blur(7px)}.modal.open{display:flex}.card{width:min(480px,100%);max-height:90vh;overflow:auto;padding:22px;border:1px solid #343b4a;border-radius:16px;background:#141821;box-shadow:var(--shadow)}.modal-head{display:flex;justify-content:space-between;gap:15px;margin-bottom:16px}.modal-head h2{margin:0;font-size:17px}.modal-head p{margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.55}.close{width:30px;height:30px;border:1px solid var(--line);border-radius:8px;background:#1a1e28;color:#afb6c2;cursor:pointer}.field{margin:13px 0}.field label{display:block;margin-bottom:7px;color:#bbc1cd;font-size:11px;font-weight:650}.field input,.field select{width:100%;min-height:41px;padding:9px 11px;border:1px solid #333a48;border-radius:9px;outline:none;background:#0f1219;color:#edf0f6;font-size:12px}.help{margin-top:6px;color:#7f8796;font-size:10px;line-height:1.55}.save-settings{width:100%;min-height:42px;margin-top:5px;border:0;border-radius:9px;background:linear-gradient(135deg,#7667ec,#5548c7);color:white;font-size:12px;font-weight:700;cursor:pointer}.toast{position:fixed;z-index:150;right:18px;bottom:18px;max-width:min(420px,calc(100vw - 36px));padding:11px 14px;border:1px solid #3b4251;border-radius:10px;background:#1b202b;color:#e8ebf1;box-shadow:var(--shadow);font-size:12px;line-height:1.5;opacity:0;pointer-events:none;transform:translateY(8px);transition:.18s}.toast.visible{opacity:1;transform:translateY(0)}
-    @keyframes pulse{50%{box-shadow:0 0 0 5px #ff707d24}}
-    @media(max-width:760px){.sidebar{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);height:100dvh;transform:translateX(-102%);transition:transform .2s ease;box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.mobile-close{display:inline-grid}.backdrop.open{position:fixed;z-index:15;inset:0;display:block;background:#0008}.topbar{flex-basis:58px;padding:0 12px}.top-left{gap:9px}.messages{padding:22px 14px}.suggestions{grid-template-columns:1fr;gap:8px}.suggestion{min-height:57px}.bubble{max-width:calc(100% - 43px);padding:10px 12px;font-size:12px}.composer-foot{padding:9px 10px 11px}.note{font-size:9px}.settings-btn{width:36px;justify-content:center;padding:0;font-size:0}.settings-btn span{font-size:15px}}
-    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition-duration:.01ms!important}}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Toolkit — Gemini Powered</title>
+<style>
+:root {
+  --bg: #0a0c12;
+  --bg2: #10131e;
+  --bg3: #161b28;
+  --border: #252d40;
+  --text: #e8ecf4;
+  --muted: #7a8499;
+  --accent: #6c63ff;
+  --accent2: #8b7cff;
+  --green: #43d9a2;
+  --red: #ff6b7a;
+  --yellow: #ffcc5c;
+  --blue: #5ba4ff;
+  --shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100vh;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
+body{display:flex;flex-direction:column}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--accent2);text-decoration:none}
+
+/* HEADER */
+.header{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+  height:60px;
+  background:#0d0f1acc;
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.logo{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;letter-spacing:-.03em}
+.logo-icon{
+  display:grid;place-items:center;
+  width:36px;height:36px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#5a4fcf,#3d3aaa);
+  border:1px solid #7a6fff44;
+  font-size:18px;
+}
+.key-pill{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 12px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--bg3);
+  font-size:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+.key-pill:hover{border-color:var(--accent2);background:#1c2035}
+.key-dot{width:8px;height:8px;border-radius:50%;background:var(--red)}
+.key-dot.ok{background:var(--green)}
+.model-tag{
+  padding:4px 9px;
+  border-radius:6px;
+  background:#1c2235;
+  color:var(--accent2);
+  font-size:11px;
+  font-weight:700;
+}
+
+/* KEY MODAL */
+.modal-bg{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;
+}
+.modal-bg.show{display:flex}
+.modal{
+  width:min(480px,94vw);
+  padding:28px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:var(--bg2);
+  box-shadow:var(--shadow);
+}
+.modal h2{font-size:18px;font-weight:780;margin-bottom:6px}
+.modal p{color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:18px}
+.modal label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:.08em;text-transform:uppercase}
+.modal input[type=text],
+.modal input[type=password]{
+  width:100%;padding:10px 13px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:#0d1020;
+  color:var(--text);
+  font-size:13px;
+  margin-bottom:14px;
+  transition:.2s;
+}
+.modal input:focus{outline:none;border-color:var(--accent2)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px 18px;
+  border:none;border-radius:9px;
+  background:linear-gradient(135deg,var(--accent),#4f46cc);
+  color:#fff;font-size:13px;font-weight:700;
+  cursor:pointer;transition:.2s;
+}
+.btn:hover{opacity:.88;transform:translateY(-1px)}
+.btn:active{transform:none}
+.btn.ghost{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--muted);
+}
+.btn.ghost:hover{border-color:var(--accent2);color:var(--text)}
+.btn-row{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+.link-row{margin-top:14px;font-size:11px;color:var(--muted);text-align:center}
+.link-row a{color:var(--accent2)}
+
+/* LAYOUT */
+.layout{display:flex;flex:1;min-height:calc(100vh - 60px)}
+.sidebar{
+  flex:0 0 220px;
+  padding:16px 12px;
+  border-right:1px solid var(--border);
+  background:var(--bg2);
+  overflow-y:auto;
+}
+.tool-group{margin-bottom:20px}
+.tool-group-label{
+  padding:0 8px 8px;
+  font-size:10px;font-weight:800;
+  color:var(--muted);
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.tool-btn{
+  display:flex;align-items:center;gap:9px;
+  width:100%;padding:9px 10px;
+  border:none;border-radius:9px;
+  background:transparent;
+  color:var(--muted);
+  font-size:12.5px;font-weight:600;
+  cursor:pointer;transition:.15s;
+  margin-bottom:2px;
+}
+.tool-btn:hover{background:var(--bg3);color:var(--text)}
+.tool-btn.active{background:#1c2038;color:var(--accent2);border:1px solid #4540a022}
+.tool-icon{
+  display:grid;place-items:center;
+  width:28px;height:28px;
+  border-radius:8px;
+  font-size:14px;
+  flex-shrink:0;
+}
+
+/* MAIN PANEL */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.tool-panel{display:none;flex:1;flex-direction:column;padding:28px clamp(16px,4vw,48px);max-width:960px;width:100%;margin:0 auto}
+.tool-panel.active{display:flex}
+.panel-header{margin-bottom:24px}
+.panel-title{
+  font-size:22px;font-weight:800;letter-spacing:-.035em;
+  margin-bottom:5px;
+}
+.panel-desc{color:var(--muted);font-size:13px;line-height:1.7}
+
+/* CHAT STYLES */
+.chat-box{
+  flex:1;
+  display:flex;flex-direction:column;
+  min-height:400px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--bg3);
+  overflow:hidden;
+}
+.chat-messages{
+  flex:1;overflow-y:auto;padding:20px;
+  display:flex;flex-direction:column;gap:14px;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+}
+.msg{display:flex;gap:10px;align-items:flex-start}
+.msg.user{flex-direction:row-reverse}
+.msg-avatar{
+  display:grid;place-items:center;
+  width:30px;height:30px;flex-shrink:0;
+  border-radius:9px;
+  font-size:12px;font-weight:800;
+}
+.msg.ai .msg-avatar{background:#1d2135;border:1px solid var(--border);color:var(--accent2)}
+.msg.user .msg-avatar{background:linear-gradient(135deg,#5a4fcf,#3d3aaa);color:#fff}
+.msg-bubble{
+  max-width:calc(100% - 50px);
+  padding:10px 14px;
+  border-radius:4px 13px 13px 13px;
+  background:#1a1f31;
+  border:1px solid var(--border);
+  font-size:13px;line-height:1.75;
+  white-space:pre-wrap;word-break:break-word;
+}
+.msg.user .msg-bubble{
+  border-radius:13px 4px 13px 13px;
+  background:#1e1b38;
+  border-color:#5048a033;
+  color:#f0eeff;
+}
+.msg-bubble.thinking{color:var(--muted);font-style:italic}
+.msg-bubble pre{
+  margin:10px 0 3px;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:#0b0e18;
+  overflow:auto;
+  font-family:ui-monospace,monospace;
+  font-size:12px;
+  color:#e0e5ef;
+}
+.msg-bubble code:not(pre code){
+  padding:2px 5px;
+  border-radius:4px;
+  background:#202535;
+  font-family:ui-monospace,monospace;
+  font-size:.92em;
+  color:#c4bcff;
+}
+.chat-input-row{
+  display:flex;gap:8px;
+  padding:12px;
+  border-top:1px solid var(--border);
+  background:#121627;
+}
+.chat-input-row textarea{
+  flex:1;
+  padding:10px 13px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#0d1020;
+  color:var(--text);
+  font-size:13px;
+  resize:none;
+  min-height:44px;max-height:140px;
+  line-height:1.5;
+  transition:.2s;
+}
+.chat-input-row textarea:focus{outline:none;border-color:var(--accent2)}
+.send-btn{
+  display:grid;place-items:center;
+  width:44px;height:44px;
+  border:none;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),#4f46cc);
+  color:#fff;font-size:18px;
+  cursor:pointer;transition:.2s;
+  align-self:flex-end;
+}
+.send-btn:hover{opacity:.85}
+.send-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* TOOL PANELS (non-chat) */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1}
+@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+.col-box{
+  display:flex;flex-direction:column;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--bg3);
+  overflow:hidden;
+}
+.col-head{
+  padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  font-size:11px;font-weight:700;
+  color:var(--muted);
+  letter-spacing:.09em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.col-body{flex:1;display:flex;flex-direction:column}
+.col-body textarea{
+  flex:1;
+  padding:14px;
+  border:none;
+  background:transparent;
+  color:var(--text);
+  font-size:12.5px;
+  line-height:1.75;
+  resize:none;
+  min-height:200px;
+}
+.col-body textarea:focus{outline:none}
+.col-result{
+  flex:1;
+  padding:14px;
+  font-size:12.5px;
+  line-height:1.78;
+  color:#d8dce9;
+  overflow-y:auto;
+  white-space:pre-wrap;
+  word-break:break-word;
+  min-height:200px;
+}
+.col-result.empty{color:var(--muted);font-style:italic}
+.col-result pre{
+  margin:8px 0;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#0b0e18;
+  font-size:12px;
+  overflow:auto;
+  white-space:pre;
+}
+.col-result code:not(pre code){
+  padding:1px 5px;
+  border-radius:4px;
+  background:#202535;
+  font-family:ui-monospace,monospace;
+  font-size:.91em;
+  color:#c4bcff;
+}
+.action-row{
+  padding:10px 12px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+  background:#121627;
+}
+.action-row select{
+  padding:6px 10px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#0d1020;
+  color:var(--text);
+  font-size:12px;
+}
+.run-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;
+  border:none;border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),#4f46cc);
+  color:#fff;font-size:12px;font-weight:700;
+  cursor:pointer;transition:.2s;
+  margin-left:auto;
+}
+.run-btn:hover{opacity:.85}
+.run-btn:disabled{opacity:.4;cursor:not-allowed}
+.char-count{font-size:10px;color:var(--muted);margin-left:auto}
+
+/* IMAGE TOOL */
+.img-drop{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:10px;
+  padding:30px;
+  border:2px dashed var(--border);
+  border-radius:12px;
+  background:#0d1020;
+  cursor:pointer;
+  transition:.2s;
+  min-height:140px;
+}
+.img-drop:hover,.img-drop.dragover{border-color:var(--accent2);background:#141930}
+.img-drop span{color:var(--muted);font-size:13px}
+.img-drop .icon{font-size:30px}
+.img-preview{max-width:100%;max-height:200px;border-radius:9px;object-fit:contain;display:none}
+
+/* HISTORY / TAG */
+.history-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 8px;
+  border-radius:6px;
+  background:#1c2038;
+  color:var(--accent2);
+  font-size:10px;font-weight:700;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  padding:10px 18px;
+  border-radius:10px;
+  background:#1e2235;
+  border:1px solid var(--border);
+  color:var(--text);
+  font-size:13px;
+  z-index:999;
+  transition:.35s cubic-bezier(.34,1.56,.64,1);
+  opacity:0;
+  pointer-events:none;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* MOBILE */
+.mob-sidebar-toggle{
+  display:none;
+  background:transparent;border:none;
+  color:var(--muted);font-size:22px;
+  cursor:pointer;padding:4px 8px;
+}
+@media(max-width:640px){
+  .sidebar{
+    position:fixed;left:0;top:60px;bottom:0;
+    transform:translateX(-100%);
+    transition:.28s;
+    z-index:90;
+    border-right:1px solid var(--border);
+  }
+  .sidebar.open{transform:translateX(0)}
+  .mob-sidebar-toggle{display:block}
+  .panel-title{font-size:18px}
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+
+/* LOADING DOTS */
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.dots span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--muted);margin:0 2px;animation:blink 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+
+/* ABOUT / KEY INFO */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:18px}
+.info-card{
+  padding:16px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--bg3);
+}
+.info-card h3{font-size:13px;font-weight:700;margin-bottom:5px}
+.info-card p{font-size:12px;color:var(--muted);line-height:1.65}
+.info-card .tag{
+  display:inline-block;
+  margin-top:8px;
+  padding:2px 7px;
+  border-radius:5px;
+  background:#1e2640;
+  color:var(--blue);
+  font-size:10px;font-weight:700;
+}
+.step-list{counter-reset:step;list-style:none;margin-top:16px}
+.step-list li{
+  counter-increment:step;
+  display:flex;align-items:flex-start;gap:12px;
+  margin-bottom:14px;
+  font-size:13px;line-height:1.65;
+}
+.step-list li::before{
+  content:counter(step);
+  display:grid;place-items:center;
+  flex-shrink:0;
+  width:24px;height:24px;
+  border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),#4f46cc);
+  color:#fff;font-size:11px;font-weight:800;
+  margin-top:2px;
+}
+</style>
 </head>
 <body>
-<div class="app">
-  <aside class="sidebar" id="sidebar" aria-label="চ্যাট সাইডবার">
-    <div class="brand"><div class="brandmark">✦</div><div><div class="brandname">AI Developer</div><div class="brandtag">PERSONAL WORKSPACE</div></div><button class="icon mobile-close" id="mobileClose" type="button" aria-label="বন্ধ">×</button></div>
-    <button class="newchat" id="newChat" type="button">＋ নতুন চ্যাট</button>
-    <div class="search"><span>⌕</span><input id="historySearch" type="search" placeholder="পুরোনো চ্যাট খুঁজুন…" aria-label="চ্যাট খুঁজুন"></div>
-    <div class="history-head"><span>চ্যাট হিস্ট্রি</span><span class="history-count" id="historyCount">0</span></div>
-    <div class="history" id="history"></div>
-    <div class="sidefoot"><div class="save-note"><span class="save-dot"></span>চ্যাট এই ব্রাউজারে সেভ হয়</div><button class="export" id="exportBtn" type="button">⇩ চ্যাট ব্যাকআপ ডাউনলোড</button></div>
-  </aside>
-  <div class="backdrop" id="backdrop"></div>
-  <main class="main">
-    <header class="topbar"><div class="top-left"><button class="icon" id="menuBtn" type="button" aria-label="সাইডবার">☰</button><div style="min-width:0"><div class="chat-title" id="chatTitle">নতুন চ্যাট</div><div class="model-line"><span class="model-dot"></span><span id="activeModelLabel">OpenRouter Free Router</span></div></div></div><button class="settings-btn" id="settingsBtn" type="button"><span>⚙</span> সেটিংস</button></header>
-    <section class="messages" id="messages" aria-live="polite" aria-label="চ্যাট বার্তা"></section>
-    <footer class="composer-foot">
-      <div class="preview-row" id="previewRow"></div>
-      <div class="composer">
-        <button class="tool" id="attachBtn" type="button" title="ছবি বা ZIP যোগ করুন" aria-label="ছবি বা ZIP যোগ করুন">＋</button>
-        <textarea class="prompt" id="prompt" rows="1" placeholder="আপনার প্রশ্ন লিখুন… (Enter পাঠাবে, Shift+Enter নতুন লাইন)" aria-label="বার্তা লিখুন"></textarea>
-        <button class="tool" id="voiceBtn" type="button" title="ভয়েসে বলুন" aria-label="ভয়েসে বলুন">🎙</button>
-        <button class="send" id="sendBtn" type="button" title="পাঠান" aria-label="পাঠান">↑</button>
+
+<!-- KEY MODAL -->
+<div class="modal-bg" id="keyModal">
+  <div class="modal">
+    <h2>🔑 Gemini API Key দিন</h2>
+    <p>শুধুমাত্র একটি <strong>Google Gemini</strong> free API key দিলেই সব টুল কাজ করবে। Key শুধু আপনার browser-এ থাকে, কোথাও পাঠানো হয় না।</p>
+    <label>Gemini API Key</label>
+    <input type="password" id="apiKeyInput" placeholder="AIzaSy..." autocomplete="off" />
+    <div class="link-row">
+      🆓 Free key পান:
+      <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a>
+    </div>
+    <br/>
+    <div class="btn-row">
+      <button class="btn ghost" onclick="closeModal()">বাতিল</button>
+      <button class="btn" onclick="saveKey()">💾 Save করুন</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- HEADER -->
+<header class="header">
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="mob-sidebar-toggle" id="sideToggle" onclick="toggleSidebar()">☰</button>
+    <div class="logo">
+      <div class="logo-icon">✦</div>
+      AI Toolkit
+    </div>
+    <span class="model-tag">Gemini 1.5 Flash · Free</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="key-pill" onclick="openModal()">
+      <span class="key-dot" id="keyDot"></span>
+      <span id="keyLabel">API Key দিন</span>
+    </button>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="tool-group">
+      <div class="tool-group-label">চ্যাট</div>
+      <button class="tool-btn active" data-tool="chat" onclick="switchTool('chat',this)">
+        <span class="tool-icon" style="background:#1a1f38">💬</span> AI চ্যাট
+      </button>
+    </div>
+    <div class="tool-group">
+      <div class="tool-group-label">টেক্সট টুলস</div>
+      <button class="tool-btn" data-tool="summarize" onclick="switchTool('summarize',this)">
+        <span class="tool-icon" style="background:#1a2828">📋</span> সংক্ষেপ করুন
+      </button>
+      <button class="tool-btn" data-tool="translate" onclick="switchTool('translate',this)">
+        <span class="tool-icon" style="background:#1a2230">🌐</span> অনুবাদ
+      </button>
+      <button class="tool-btn" data-tool="grammar" onclick="switchTool('grammar',this)">
+        <span class="tool-icon" style="background:#201a38">✏️</span> Grammar Fix
+      </button>
+      <button class="tool-btn" data-tool="email" onclick="switchTool('email',this)">
+        <span class="tool-icon" style="background:#1a2228">📧</span> Email লিখুন
+      </button>
+    </div>
+    <div class="tool-group">
+      <div class="tool-group-label">কোড টুলস</div>
+      <button class="tool-btn" data-tool="codereview" onclick="switchTool('codereview',this)">
+        <span class="tool-icon" style="background:#1a1f35">🔍</span> Code Review
+      </button>
+      <button class="tool-btn" data-tool="bugfind" onclick="switchTool('bugfind',this)">
+        <span class="tool-icon" style="background:#2a1a1f">🐛</span> Bug Finder
+      </button>
+      <button class="tool-btn" data-tool="explain" onclick="switchTool('explain',this)">
+        <span class="tool-icon" style="background:#1a2020">📖</span> Code Explain
+      </button>
+    </div>
+    <div class="tool-group">
+      <div class="tool-group-label">মিডিয়া</div>
+      <button class="tool-btn" data-tool="image" onclick="switchTool('image',this)">
+        <span class="tool-icon" style="background:#222028">🖼️</span> Image Analyze
+      </button>
+    </div>
+    <div class="tool-group">
+      <div class="tool-group-label">সাহায্য</div>
+      <button class="tool-btn" data-tool="howto" onclick="switchTool('howto',this)">
+        <span class="tool-icon" style="background:#1a1a1a">❓</span> কীভাবে ব্যবহার করবেন
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main" id="mainArea">
+
+    <!-- CHAT -->
+    <div class="tool-panel active" id="panel-chat">
+      <div class="panel-header">
+        <div class="panel-title">💬 AI চ্যাট</div>
+        <div class="panel-desc">যেকোনো প্রশ্ন করুন — Gemini উত্তর দেবে বাংলায় বা English-এ।</div>
       </div>
-      <input id="attachmentInput" type="file" accept="image/*,.zip,application/zip,application/x-zip-compressed" multiple hidden>
-      <div class="note">OpenRouterসহ সমর্থিত API • ছবি, ZIP source, ভয়েস • free plan-এর সীমা provider অনুযায়ী</div>
-    </footer>
+      <div class="chat-box">
+        <div class="chat-messages" id="chatMessages">
+          <div class="msg ai">
+            <div class="msg-avatar">✦</div>
+            <div class="msg-bubble">নমস্কার! আমি আপনার AI সহকারী। কীভাবে সাহায্য করতে পারি? 😊</div>
+          </div>
+        </div>
+        <div class="chat-input-row">
+          <textarea id="chatInput" placeholder="এখানে টাইপ করুন... (Enter = পাঠান, Shift+Enter = নতুন লাইন)" rows="1"
+            oninput="autoResize(this)" onkeydown="chatKeydown(event)"></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendChat()" title="পাঠান">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARIZE -->
+    <div class="tool-panel" id="panel-summarize">
+      <div class="panel-header">
+        <div class="panel-title">📋 সংক্ষেপ করুন</div>
+        <div class="panel-desc">যেকোনো বড় টেক্সট পেস্ট করুন — AI সংক্ষিপ্ত সারাংশ বানাবে।</div>
+      </div>
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-head">📥 ইনপুট টেক্সট <span id="sumCharCount" class="char-count">0 chars</span></div>
+          <div class="col-body">
+            <textarea id="sumInput" placeholder="এখানে টেক্সট পেস্ট করুন..." oninput="countChars('sumInput','sumCharCount')"></textarea>
+          </div>
+          <div class="action-row">
+            <select id="sumStyle">
+              <option value="short">সংক্ষিপ্ত (৩-৫ বাক্য)</option>
+              <option value="bullet">বুলেট পয়েন্ট</option>
+              <option value="detailed">বিস্তারিত</option>
+            </select>
+            <button class="run-btn" id="sumBtn" onclick="runSummarize()">⚡ সংক্ষেপ করুন</button>
+          </div>
+        </div>
+        <div class="col-box">
+          <div class="col-head">📤 ফলাফল
+            <button class="btn ghost" style="font-size:10px;padding:3px 8px" onclick="copyResult('sumResult')">📋 Copy</button>
+          </div>
+          <div class="col-result empty" id="sumResult">ফলাফল এখানে দেখাবে...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSLATE -->
+    <div class="tool-panel" id="panel-translate">
+      <div class="panel-header">
+        <div class="panel-title">🌐 অনুবাদ</div>
+        <div class="panel-desc">যেকোনো ভাষা থেকে যেকোনো ভাষায় অনুবাদ করুন।</div>
+      </div>
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-head">📥 মূল টেক্সট</div>
+          <div class="col-body"><textarea id="transInput" placeholder="এখানে লিখুন বা পেস্ট করুন..."></textarea></div>
+          <div class="action-row">
+            <select id="transTarget">
+              <option value="Bangla">➜ বাংলা</option>
+              <option value="English">➜ English</option>
+              <option value="Hindi">➜ হিন্দি</option>
+              <option value="Arabic">➜ Arabic</option>
+              <option value="French">➜ French</option>
+              <option value="Spanish">➜ Spanish</option>
+              <option value="Chinese">➜ Chinese</option>
+              <option value="Japanese">➜ Japanese</option>
+            </select>
+            <button class="run-btn" id="transBtn" onclick="runTranslate()">⚡ অনুবাদ করুন</button>
+          </div>
+        </div>
+        <div class="col-box">
+          <div class="col-head">📤 অনুবাদ
+            <button class="btn ghost" style="font-size:10px;padding:3px 8px" onclick="copyResult('transResult')">📋 Copy</button>
+          </div>
+          <div class="col-result empty" id="transResult">অনুবাদ এখানে দেখাবে...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRAMMAR -->
+    <div class="tool-panel" id="panel-grammar">
+      <div class="panel-header">
+        <div class="panel-title">✏️ Grammar Fix</div>
+        <div class="panel-desc">English বা Bangla লেখার ভুল সংশোধন করুন এবং উন্নত করুন।</div>
+      </div>
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-head">📥 আপনার লেখা</div>
+          <div class="col-body"><textarea id="gramInput" placeholder="এখানে লেখা টাইপ করুন বা পেস্ট করুন..."></textarea></div>
+          <div class="action-row">
+            <select id="gramMode">
+              <option value="fix">শুধু সংশোধন</option>
+              <option value="improve">সংশোধন + উন্নত</option>
+              <option value="formal">Formal করুন</option>
+              <option value="simple">সহজ করুন</option>
+            </select>
+            <button class="run-btn" id="gramBtn" onclick="runGrammar()">⚡ ঠিক করুন</button>
+          </div>
+        </div>
+        <div class="col-box">
+          <div class="col-head">📤 সংশোধিত লেখা
+            <button class="btn ghost" style="font-size:10px;padding:3px 8px" onclick="copyResult('gramResult')">📋 Copy</button>
+          </div>
+          <div class="col-result empty" id="gramResult">সংশোধিত লেখা এখানে আসবে...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="tool-panel" id="panel-email">
+      <div class="panel-header">
+        <div class="panel-title">📧 Email লিখুন</div>
+        <div class="panel-desc">বিষয় ও প্রেক্ষাপট বলুন — AI পেশাদার email লিখে দেবে।</div>
+      </div>
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-head">📝 Email বিবরণ</div>
+          <div class="col-body">
+            <textarea id="emailInput" placeholder="উদাহরণ: বসকে বলুন যে আমি আগামীকাল ছুটি নিতে চাই কারণ অসুস্থ। Formal tone চাই।"></textarea>
+          </div>
+          <div class="action-row">
+            <select id="emailTone">
+              <option value="professional">Professional</option>
+              <option value="friendly">Friendly</option>
+              <option value="formal">Very Formal</option>
+              <option value="casual">Casual</option>
+            </select>
+            <button class="run-btn" id="emailBtn" onclick="runEmail()">⚡ Email লিখুন</button>
+          </div>
+        </div>
+        <div class="col-box">
+          <div class="col-head">📤 তৈরি Email
+            <button class="btn ghost" style="font-size:10px;padding:3px 8px" onclick="copyResult('emailResult')">📋 Copy</button>
+          </div>
+          <div class="col-result empty" id="emailResult">Email এখানে দেখাবে...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CODE REVIEW -->
+    <div class="tool-panel" id="panel-codereview">
+      <div class="panel-header">
+        <div class="panel-title">🔍 Code Review</div>
+        <div class="panel-desc">কোড পেস্ট করুন — AI বিস্তারিত review দেবে।</div>
+      </div>
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-head">💻 আপনার কোড</div>
+          <div class="col-body">
+            <textarea id="codeRevInput" placeholder="এখানে কোড পেস্ট করুন..." style="font-family:ui-monospace,monospace;font-size:12px"></textarea>
+          </div>
+          <div class="action-row">
+            <select id="codeLang">
+              <option value="auto">Auto Detect</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="Python">Python</option>
+              <option value="TypeScript">TypeScript</option>
+              <option value="Java">Java</option>
+              <option value="C++">C++</option>
+              <option value="PHP">PHP</option>
+              <option value="Go">Go</option>
+              <option value="Rust">Rust</option>
+            </select>
+            <button class="run-btn" id="codeRevBtn" onclick="runCodeReview()">⚡ Review করুন</button>
+          </div>
+        </div>
+        <div class="col-box">
+          <div class="col-head">📊 Review ফলাফল
+            <button class="btn ghost" style="font-size:10px;padding:3px 8px" onclick="copyResult('codeRevResult')">📋 Copy</button>
+          </div>
+          <div class="col-result empty" id="codeRevResult">Review এখানে দেখাবে...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUG FINDER -->
+    <div class="tool-panel" id="panel-bugfind">
+      <div class="panel-header">
+        <div class="panel-title">🐛 Bug Finder</div>
+        <div class="panel-desc">কোড দিন — AI bug খুঁজে বের করে সমাধান দেবে।</div>
+      </div>
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-head">💻 কোড (bug সহ)</div>
+          <div class="col-body">
+            <textarea id="bugInput" placeholder="এখানে কোড পেস্ট করুন..." style="font-family:ui-monospace,monospace;font-size:12px"></textarea>
+          </div>
+          <div class="action-row">
+            <button class="run-btn" id="bugBtn" onclick="runBugFind()">🐛 Bug খুঁজুন</button>
+          </div>
+        </div>
+        <div class="col-box">
+          <div class="col-head">🔧 Bugs ও সমাধান
+            <button class="btn ghost" style="font-size:10px;padding:3px 8px" onclick="copyResult('bugResult')">📋 Copy</button>
+          </div>
+          <div class="col-result empty" id="bugResult">Bugs এখানে দেখাবে...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CODE EXPLAIN -->
+    <div class="tool-panel" id="panel-explain">
+      <div class="panel-header">
+        <div class="panel-title">📖 Code Explain</div>
+        <div class="panel-desc">কোড দিন — AI সহজ বাংলায় বুঝিয়ে দেবে।</div>
+      </div>
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-head">💻 কোড</div>
+          <div class="col-body">
+            <textarea id="explainInput" placeholder="এখানে কোড পেস্ট করুন..." style="font-family:ui-monospace,monospace;font-size:12px"></textarea>
+          </div>
+          <div class="action-row">
+            <select id="explainLevel">
+              <option value="beginner">শুরুর জন্য (সহজ)</option>
+              <option value="intermediate">মাঝারি স্তর</option>
+              <option value="expert">বিশেষজ্ঞ স্তর</option>
+            </select>
+            <button class="run-btn" id="explainBtn" onclick="runExplain()">📖 ব্যাখ্যা করুন</button>
+          </div>
+        </div>
+        <div class="col-box">
+          <div class="col-head">💡 ব্যাখ্যা
+            <button class="btn ghost" style="font-size:10px;padding:3px 8px" onclick="copyResult('explainResult')">📋 Copy</button>
+          </div>
+          <div class="col-result empty" id="explainResult">ব্যাখ্যা এখানে দেখাবে...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="tool-panel" id="panel-image">
+      <div class="panel-header">
+        <div class="panel-title">🖼️ Image Analyze</div>
+        <div class="panel-desc">ছবি আপলোড করুন — Gemini Vision ছবি বিশ্লেষণ করবে।</div>
+      </div>
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-head">📸 ছবি আপলোড</div>
+          <div class="col-body" style="padding:14px;gap:12px;display:flex;flex-direction:column">
+            <div class="img-drop" id="imgDrop" onclick="document.getElementById('imgInput').click()"
+              ondragover="event.preventDefault();this.classList.add('dragover')"
+              ondragleave="this.classList.remove('dragover')"
+              ondrop="handleImgDrop(event)">
+              <span class="icon">📁</span>
+              <span>ছবি drag করুন বা click করে select করুন</span>
+              <span style="font-size:11px;color:#555e72">JPG, PNG, WEBP, GIF</span>
+            </div>
+            <img id="imgPreview" class="img-preview" alt="preview" />
+            <input type="file" id="imgInput" accept="image/*" style="display:none" onchange="handleImgFile(this)" />
+            <textarea id="imgPrompt" placeholder="ছবি সম্পর্কে কী জানতে চান? (optional)" rows="2"
+              style="padding:10px;border:1px solid var(--border);border-radius:9px;background:#0d1020;color:var(--text);font-size:12px;resize:none;"></textarea>
+          </div>
+          <div class="action-row">
+            <button class="btn ghost" style="font-size:11px" onclick="clearImage()">🗑️ Clear</button>
+            <button class="run-btn" id="imgBtn" onclick="runImageAnalyze()">🔍 Analyze করুন</button>
+          </div>
+        </div>
+        <div class="col-box">
+          <div class="col-head">🧠 AI বিশ্লেষণ
+            <button class="btn ghost" style="font-size:10px;padding:3px 8px" onclick="copyResult('imgResult')">📋 Copy</button>
+          </div>
+          <div class="col-result empty" id="imgResult">বিশ্লেষণ এখানে দেখাবে...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW TO -->
+    <div class="tool-panel" id="panel-howto">
+      <div class="panel-header">
+        <div class="panel-title">❓ কীভাবে ব্যবহার করবেন</div>
+        <div class="panel-desc">এই টুলকিট সম্পূর্ণ ফ্রি। শুধু একটি Gemini API key লাগবে।</div>
+      </div>
+      <ol class="step-list">
+        <li>
+          <span></span>
+          <div><strong>Gemini API Key নিন (সম্পূর্ণ ফ্রি):</strong><br/>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a>-তে যান → Google account দিয়ে login করুন → "Create API Key" click করুন → Key কপি করুন।
+          </div>
+        </li>
+        <li>
+          <span></span>
+          <div><strong>Key সেট করুন:</strong><br/>
+          উপরে ডানদিকে "API Key দিন" button click করুন → Key paste করুন → Save করুন।
+          </div>
+        </li>
+        <li>
+          <span></span>
+          <div><strong>যেকোনো টুল ব্যবহার করুন:</strong><br/>
+          বাম sidebar থেকে টুল select করুন → ইনপুট দিন → Run করুন।
+          </div>
+        </li>
+        <li>
+          <span></span>
+          <div><strong>Key সুরক্ষিত:</strong><br/>
+          আপনার key শুধু browser-এর localStorage-এ থাকে। কোনো server-এ পাঠানো হয় না।
+          </div>
+        </li>
+      </ol>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>💬 AI চ্যাট</h3>
+          <p>যেকোনো প্রশ্ন করুন বাংলায় বা ইংরেজিতে।</p>
+          <span class="tag">Gemini 1.5 Flash</span>
+        </div>
+        <div class="info-card">
+          <h3>📋 সংক্ষেপ</h3>
+          <p>বড় article, রিপোর্ট, ডকুমেন্ট সংক্ষিপ্ত করুন।</p>
+          <span class="tag">Gemini 1.5 Flash</span>
+        </div>
+        <div class="info-card">
+          <h3>🌐 অনুবাদ</h3>
+          <p>৮+ ভাষায় যেকোনো টেক্সট অনুবাদ।</p>
+          <span class="tag">Gemini 1.5 Flash</span>
+        </div>
+        <div class="info-card">
+          <h3>✏️ Grammar Fix</h3>
+          <p>English ও বাংলা লেখা সংশোধন ও উন্নত।</p>
+          <span class="tag">Gemini 1.5 Flash</span>
+        </div>
+        <div class="info-card">
+          <h3>📧 Email Writer</h3>
+          <p>Professional email তৈরি করুন সহজে।</p>
+          <span class="tag">Gemini 1.5 Flash</span>
+        </div>
+        <div class="info-card">
+          <h3>🔍 Code Review</h3>
+          <p>কোডের মান, style ও best practices চেক।</p>
+          <span class="tag">Gemini 1.5 Flash</span>
+        </div>
+        <div class="info-card">
+          <h3>🐛 Bug Finder</h3>
+          <p>কোডে bugs ও ত্রুটি খুঁজে সমাধান দিন।</p>
+          <span class="tag">Gemini 1.5 Flash</span>
+        </div>
+        <div class="info-card">
+          <h3>📖 Code Explain</h3>
+          <p>কোড সহজ বাংলায় বুঝুন।</p>
+          <span class="tag">Gemini 1.5 Flash</span>
+        </div>
+        <div class="info-card">
+          <h3>🖼️ Image Analyze</h3>
+          <p>ছবি upload করে AI দিয়ে বিশ্লেষণ করুন।</p>
+          <span class="tag">Gemini Vision</span>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 
-<div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
-  <div class="card">
-    <div class="modal-head"><div><h2 id="settingsTitle">API সেটিংস</h2><p>প্রতিটি provider-এর নিজের API key এবং model ID লাগে। ফ্রি ব্যবহারের সীমা provider নির্ধারণ করে।</p></div><button class="close" id="closeSettings" type="button" aria-label="বন্ধ">×</button></div>
-    <div class="field"><label for="providerSelect">API provider</label><select id="providerSelect"><option value="openrouter">OpenRouter</option><option value="gemini">Google Gemini (OpenAI compatible)</option><option value="groq">Groq (OpenAI compatible)</option><option value="mistral">Mistral (OpenAI compatible)</option><option value="custom">Custom OpenAI-compatible API</option></select></div>
-    <div class="field"><label for="apiKeyInput">এই provider-এর API key</label><input id="apiKeyInput" type="password" autocomplete="off" placeholder="API key দিন"/><div class="help">ঐচ্ছিক: নিজের Key দিতে পারেন। Render Environment-এ server key থাকলে এটি ফাঁকা রাখা যাবে। গোপন Key প্রকাশ করবেন না।</div></div>
-    <div class="field" id="endpointField" style="display:none"><label for="endpointInput">OpenAI-compatible endpoint / base URL</label><input id="endpointInput" type="url" placeholder="https://api.example.com/v1/chat/completions"/><div class="help">Custom provider-এ provider-এর documented OpenAI Chat Completions endpoint দিন। Browser CORS অনুমতি না দিলে custom endpoint নাও চলতে পারে।</div></div>
-    <div class="field"><label for="modelInput">Model ID</label><input id="modelInput" list="openrouterModelSuggestions" placeholder="মডেল আইডি লিখুন"/><datalist id="openrouterModelSuggestions"><option value="openrouter/free"></option><option value="google/gemma-4-31b-it:free"></option><option value="google/gemma-4-26b-a4b-it:free"></option><option value="nvidia/nemotron-3.5-lightning:free"></option><option value="cohere/north-mini-code:free"></option><option value="thinkingmachines/inkling:free"></option><option value="nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"></option></datalist><div class="help" id="modelHelp">OpenRouter key একই OpenRouter catalog-এর মডেলগুলোতে ব্যবহার হবে। ‘ফ্রি’ মডেলেরও usage/rate limit থাকে।</div></div>
-    <button class="save-settings" id="saveSettings" type="button">সেভ করুন</button>
-  </div>
-</div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
 <script>
-'use strict';
-const CHAT_KEY='aiWorkspace.chats.v2';
-const ACTIVE_CHAT_KEY='aiWorkspace.activeChat.v2';
-const PROVIDER_KEY='aiWorkspace.providers.v1';
-const ACTIVE_PROVIDER_KEY='aiWorkspace.activeProvider.v1';
-const PROVIDERS={
-  openrouter:{label:'OpenRouter',proxy:true,defaultModel:'openrouter/free'},
-  gemini:{label:'Google Gemini',proxy:true,defaultModel:''},
-  groq:{label:'Groq',proxy:true,defaultModel:''},
-  mistral:{label:'Mistral',proxy:true,defaultModel:''},
-  custom:{label:'Custom OpenAI-compatible',proxy:false,defaultModel:''}
-};
-const SYSTEM_PROMPT='You are a helpful full-stack coding assistant. Respond in the language the user uses, including fluent Bengali. You may be given images and source files extracted from a ZIP; inspect them and answer accurately. Do not claim unlimited API usage; provider quotas apply.';
-let providerProfiles=loadProviderProfiles();
-let activeProvider=localStorage.getItem(ACTIVE_PROVIDER_KEY)||'openrouter';
-if(!PROVIDERS[activeProvider])activeProvider='openrouter';
-let conversations=loadConversations();
-let activeChatId=localStorage.getItem(ACTIVE_CHAT_KEY)||localStorage.getItem('freeClaude.activeConversation.v1')||null;
-let currentMessages=[];
-let selectedImages=[];
-let selectedZip=null;
-let isSending=false;
-let recognition=null;
-let isRecording=false;
-let toastTimer=null;
+// ============================================================
+// STATE
+// ============================================================
+const MODEL = 'gemini-1.5-flash';
+const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/';
+let chatHistory = [];
+let imgBase64 = null;
+let imgMime = null;
 
-function loadProviderProfiles(){
-  let stored={};
-  try{stored=JSON.parse(localStorage.getItem(PROVIDER_KEY)||'{}')||{};}catch(e){}
-  if(!stored.openrouter)stored.openrouter={apiKey:localStorage.getItem('openrouter_key')||'',model:localStorage.getItem('openrouter_model')||'openrouter/free',endpoint:''};
-  for(const id of Object.keys(PROVIDERS))if(!stored[id])stored[id]={apiKey:'',model:PROVIDERS[id].defaultModel||'',endpoint:''};
-  return stored;
+// ============================================================
+// API KEY
+// ============================================================
+function getKey() { return localStorage.getItem('gemini_api_key') || ''; }
+function setKey(k) { localStorage.setItem('gemini_api_key', k.trim()); updateKeyUI(); }
+function updateKeyUI() {
+  const k = getKey();
+  document.getElementById('keyDot').className = 'key-dot' + (k ? ' ok' : '');
+  document.getElementById('keyLabel').textContent = k ? 'API Key সেট ✓' : 'API Key দিন';
 }
-function saveProviderProfiles(){try{localStorage.setItem(PROVIDER_KEY,JSON.stringify(providerProfiles));const c=providerProfiles.openrouter||{};localStorage.setItem('openrouter_key',c.apiKey||'');localStorage.setItem('openrouter_model',c.model||'openrouter/free');return true;}catch(e){showToast('সেটিংস সেভ হয়নি—browser storage পরীক্ষা করুন।');return false;}}
-function loadConversations(){try{const saved=localStorage.getItem(CHAT_KEY)||localStorage.getItem('freeClaude.conversations.v1')||'[]';const parsed=JSON.parse(saved);if(!Array.isArray(parsed))return[];return parsed.filter(c=>c&&typeof c.id==='string'&&Array.isArray(c.messages)).map(c=>({id:c.id,title:typeof c.title==='string'?c.title:'নতুন চ্যাট',createdAt:Number(c.createdAt)||Date.now(),updatedAt:Number(c.updatedAt)||Date.now(),messages:c.messages.filter(m=>m&&['user','assistant'].includes(m.role)&&typeof m.content==='string').map(m=>({role:m.role,content:m.content,images:Array.isArray(m.images)?m.images.filter(i=>i&&typeof i.dataUrl==='string'&&i.dataUrl.startsWith('data:image/')).map(i=>({name:String(i.name||'ছবি'),dataUrl:i.dataUrl})):[],project:m.project&&Array.isArray(m.project.files)?{name:String(m.project.name||'source.zip'),truncated:!!m.project.truncated,files:m.project.files.filter(f=>f&&typeof f.path==='string'&&typeof f.content==='string').map(f=>({path:f.path,content:f.content}))}:null}))})).sort((a,b)=>b.updatedAt-a.updatedAt);}catch(e){return[];}}
-function saveConversations(){try{conversations.sort((a,b)=>b.updatedAt-a.updatedAt);localStorage.setItem(CHAT_KEY,JSON.stringify(conversations));return true;}catch(e){showToast('চ্যাট সেভ করার browser storage পূর্ণ। পুরোনো চ্যাট export/delete করুন।');return false;}}
-function makeId(){return window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
-function activeConversation(){return conversations.find(c=>c.id===activeChatId)||null;}
-function newConversation(){const now=Date.now();const c={id:makeId(),title:'নতুন চ্যাট',createdAt:now,updatedAt:now,messages:[]};conversations.unshift(c);activeChatId=c.id;localStorage.setItem(ACTIVE_CHAT_KEY,c.id);return c;}
-function makeTitle(messages){const first=messages.find(m=>m.role==='user')?.content||'নতুন চ্যাট';const chars=Array.from(first.replace(/\s+/g,' ').trim());return chars.length>42?chars.slice(0,42).join('')+'…':(chars.join('')||'নতুন চ্যাট');}
-function persistActive(touch=true){const c=activeConversation();if(!c)return true;c.messages=currentMessages.map(m=>({role:m.role,content:m.content,images:Array.isArray(m.images)?m.images.map(i=>({name:i.name,dataUrl:i.dataUrl})):[],project:m.project?{name:m.project.name,truncated:!!m.project.truncated,files:m.project.files.map(f=>({path:f.path,content:f.content}))}:null}));c.title=makeTitle(c.messages);if(touch)c.updatedAt=Date.now();localStorage.setItem(ACTIVE_CHAT_KEY,c.id);const ok=saveConversations();renderHistory();updateTitle();return ok;}
-function currentProfile(){return providerProfiles[activeProvider]||{apiKey:'',model:'',endpoint:''};}
-function init(){if(activeChatId&&activeConversation()){currentMessages=activeConversation().messages.map(m=>({...m}));localStorage.setItem(ACTIVE_CHAT_KEY,activeChatId);if(!localStorage.getItem(CHAT_KEY)&&localStorage.getItem('freeClaude.conversations.v1'))saveConversations();}else{activeChatId=null;localStorage.removeItem(ACTIVE_CHAT_KEY);}document.getElementById('providerSelect').value=activeProvider;fillProviderForm();bindEvents();renderHistory();renderMessages();updateTitle();updateModelLabel();}
-function bindEvents(){
-  document.getElementById('providerSelect').addEventListener('change',()=>{activeProvider=document.getElementById('providerSelect').value;localStorage.setItem(ACTIVE_PROVIDER_KEY,activeProvider);fillProviderForm();updateModelLabel();});
-  document.getElementById('settingsBtn').addEventListener('click',openSettings);document.getElementById('closeSettings').addEventListener('click',closeSettings);document.getElementById('saveSettings').addEventListener('click',saveSettings);
-  document.getElementById('settingsModal').addEventListener('click',e=>{if(e.target.id==='settingsModal')closeSettings();});
-  document.getElementById('newChat').addEventListener('click',startNewChat);document.getElementById('menuBtn').addEventListener('click',openSidebar);document.getElementById('mobileClose').addEventListener('click',closeSidebar);document.getElementById('backdrop').addEventListener('click',closeSidebar);
-  document.getElementById('historySearch').addEventListener('input',renderHistory);document.getElementById('sendBtn').addEventListener('click',sendPrompt);document.getElementById('prompt').addEventListener('keydown',handlePromptKey);document.getElementById('prompt').addEventListener('input',autoGrow);document.getElementById('attachBtn').addEventListener('click',()=>document.getElementById('attachmentInput').click());document.getElementById('attachmentInput').addEventListener('change',handleAttachments);document.getElementById('voiceBtn').addEventListener('click',toggleVoice);document.getElementById('exportBtn').addEventListener('click',exportHistory);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSettings();closeSidebar();}});
+function openModal() {
+  document.getElementById('apiKeyInput').value = getKey();
+  document.getElementById('keyModal').classList.add('show');
+  setTimeout(() => document.getElementById('apiKeyInput').focus(), 100);
 }
-function fillProviderForm(){const cfg=currentProfile();document.getElementById('apiKeyInput').value=cfg.apiKey||'';document.getElementById('modelInput').value=cfg.model||PROVIDERS[activeProvider].defaultModel||'';document.getElementById('endpointInput').value=cfg.endpoint||'';document.getElementById('endpointField').style.display=activeProvider==='custom'?'block':'none';const tips={openrouter:'OpenRouter key একই OpenRouter catalog-এর মডেলগুলোতে ব্যবহার হবে। ‘ফ্রি’ মডেলেরও usage/rate limit থাকে।',gemini:'Google AI Studio থেকে নেওয়া Gemini API key দিন; model ID Google-এর বর্তমান catalog অনুযায়ী লিখুন।',groq:'Groq API key দিন; model ID Groq dashboard-এর model list থেকে নিন।',mistral:'Mistral API key দিন; model ID আপনার account-এ চালু মডেল অনুযায়ী লিখুন।',custom:'শুধু OpenAI Chat Completions format-এ compatible endpoint; browser CORS support দরকার।'};document.getElementById('modelHelp').textContent=tips[activeProvider]||'';}
-function openSettings(){document.getElementById('providerSelect').value=activeProvider;fillProviderForm();document.getElementById('settingsModal').classList.add('open');setTimeout(()=>document.getElementById('apiKeyInput').focus(),40);}
-function closeSettings(){document.getElementById('settingsModal').classList.remove('open');}
-function saveSettings(){const apiKey=document.getElementById('apiKeyInput').value.trim();const model=document.getElementById('modelInput').value.trim();const endpoint=document.getElementById('endpointInput').value.trim();if(!apiKey){showToast('এই provider-এর API key দিন।');return;}if(!model){showToast('Model ID লিখুন।');return;}if(activeProvider==='custom'&&!/^https:\/\//i.test(endpoint)){showToast('Custom endpoint অবশ্যই https:// দিয়ে শুরু হতে হবে।');return;}providerProfiles[activeProvider]={apiKey,model,endpoint};localStorage.setItem(ACTIVE_PROVIDER_KEY,activeProvider);saveProviderProfiles();updateModelLabel();closeSettings();showToast('Settings সেভ হয়েছে। Free quota provider অনুযায়ী প্রযোজ্য।');}
-function updateModelLabel(){const p=PROVIDERS[activeProvider]?.label||activeProvider;const model=currentProfile().model||'Model নির্বাচন করুন';document.getElementById('activeModelLabel').textContent=p+' · '+model;}
-function showToast(text){const t=document.getElementById('toast');t.textContent=text;t.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('visible'),3800);}
-function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('backdrop').classList.add('open');}function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('backdrop').classList.remove('open');}
-function startNewChat(){if(isSending){showToast('উত্তর তৈরি হওয়া শেষ হলে নতুন চ্যাট শুরু করুন।');return;}persistActive(false);activeChatId=null;currentMessages=[];localStorage.removeItem(ACTIVE_CHAT_KEY);selectedImages=[];selectedZip=null;renderPreview();renderMessages();renderHistory();updateTitle();closeSidebar();document.getElementById('prompt').focus();}
-function openConversation(id){if(isSending)return;persistActive(false);const c=conversations.find(x=>x.id===id);if(!c)return;activeChatId=id;localStorage.setItem(ACTIVE_CHAT_KEY,id);currentMessages=c.messages.map(m=>({...m}));renderMessages();renderHistory();updateTitle();closeSidebar();}
-function updateTitle(){document.getElementById('chatTitle').textContent=activeConversation()?.title||'নতুন চ্যাট';}
-function removeConversation(id){if(isSending)return;const c=conversations.find(x=>x.id===id);if(!c||!confirm('“'+c.title+'” চ্যাটটি মুছবেন?'))return;conversations=conversations.filter(x=>x.id!==id);if(activeChatId===id){activeChatId=null;currentMessages=[];localStorage.removeItem(ACTIVE_CHAT_KEY);renderMessages();updateTitle();}saveConversations();renderHistory();}
-function fmtDate(t){const d=new Date(t);const n=new Date();if(Number.isNaN(d.getTime()))return'';return new Intl.DateTimeFormat('bn-BD',d.toDateString()===n.toDateString()?{hour:'numeric',minute:'2-digit'}:{day:'numeric',month:'short'}).format(d);}
-function renderHistory(){const box=document.getElementById('history');box.replaceChildren();document.getElementById('historyCount').textContent=String(conversations.length);const q=document.getElementById('historySearch').value.trim().toLocaleLowerCase();const items=conversations.filter(c=>!q||c.title.toLocaleLowerCase().includes(q)||c.messages.some(m=>m.content.toLocaleLowerCase().includes(q)));if(!items.length){const empty=document.createElement('div');empty.className='history-empty';empty.textContent=conversations.length?'কোনো চ্যাট মেলেনি।':'এখনও চ্যাট নেই। নতুন চ্যাট শুরু করলে এখানে থাকবে।';box.appendChild(empty);return;}for(const c of items){const row=document.createElement('div');row.className='history-item'+(c.id===activeChatId?' active':'');const open=document.createElement('button');open.className='history-open';open.type='button';open.disabled=isSending;open.title=c.title;open.addEventListener('click',()=>openConversation(c.id));const title=document.createElement('span');title.className='history-title';title.textContent=c.title;const meta=document.createElement('span');meta.className='history-meta';meta.textContent=fmtDate(c.updatedAt)+' · '+c.messages.length+' বার্তা';open.append(title,meta);const del=document.createElement('button');del.className='history-delete';del.type='button';del.textContent='×';del.title='চ্যাট মুছুন';del.setAttribute('aria-label',c.title+' মুছুন');del.disabled=isSending;del.addEventListener('click',()=>removeConversation(c.id));row.append(open,del);box.appendChild(row);}}
-function renderWelcome(){const w=document.createElement('div');w.className='welcome';w.innerHTML='<div class="welcome-icon">✦</div><h1>আজ কী তৈরি করবেন?</h1><p>কোড লিখুন, বাগ ঠিক করুন, ছবি দেখান বা ZIP-এ থাকা project files নিয়ে প্রশ্ন করুন। বাংলা ও ইংরেজি—দুই ভাষাতেই কথা বলতে পারেন।</p><div class="suggestions"><button class="suggestion" data-prompt="আমার কোডে এই সমস্যা হচ্ছে, কারণ ও সমাধান বুঝিয়ে দাও: "><span>কোড ডিবাগ</span>ত্রুটি খুঁজে ব্যবহারযোগ্য সমাধান</button><button class="suggestion" data-prompt="এই ছবিটি বিশ্লেষণ করে বুঝিয়ে দাও: "><span>ছবি বিশ্লেষণ</span>ছবি attach করে প্রশ্ন করুন</button><button class="suggestion" data-prompt="এই project ZIP-এর গঠন ও গুরুত্বপূর্ণ কোড বিশ্লেষণ করো: "><span>Project review</span>ZIP source files নিয়ে বিশ্লেষণ</button><button class="suggestion" data-prompt="একটি আধুনিক ও মোবাইল-রেসপনসিভ ওয়েবসাইটের code লিখে দাও: "><span>নতুন কিছু তৈরি</span>পরিষ্কার ও কার্যকর code</button></div>';w.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{const i=document.getElementById('prompt');i.value=b.dataset.prompt;autoGrow();i.focus();}));return w;}
-function renderMessages(){const box=document.getElementById('messages');box.replaceChildren();if(!currentMessages.length){box.appendChild(renderWelcome());return;}for(const m of currentMessages)appendMessage(m,box);box.scrollTop=box.scrollHeight;}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function formatInline(s){return escapeHtml(s).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/\r?\n/g,'<br>');}
-function formatText(text){const src=String(text);const rx=/```([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n([\s\S]*?)```/g;let out='',pos=0,m;while((m=rx.exec(src))){out+=formatInline(src.slice(pos,m.index));out+='<pre><div class="codehead"><span>'+escapeHtml(m[1]||'code')+'</span><button class="copy" type="button" onclick="copyCode(this)">কপি</button></div><code>'+escapeHtml(m[2].replace(/\n$/,''))+'</code></pre>';pos=m.index+m[0].length;}return out+formatInline(src.slice(pos));}
-function appendMessage(m,parent=document.getElementById('messages')){const row=document.createElement('div');row.className='row'+(m.role==='user'?' user':'');const av=document.createElement('div');av.className='avatar';av.textContent=m.role==='user'?'আপনি':'AI';const bubble=document.createElement('div');bubble.className='bubble';bubble.innerHTML=formatText(m.content);row.append(av,bubble);if(m.images?.length||m.project){const files=document.createElement('div');files.className='msg-files';for(const img of(m.images||[])){const image=document.createElement('img');image.className='msg-image';image.src=img.dataUrl;image.alt=img.name||'সংযুক্ত ছবি';files.appendChild(image);}if(m.project){const zip=document.createElement('span');zip.className='zip-badge';zip.textContent='📦 '+m.project.name+' · '+m.project.files.length+'টি source file'+(m.project.truncated?' · কিছু file বাদ গেছে':'');files.appendChild(zip);}bubble.appendChild(files);}if(m.role==='assistant'&&m.content){const tools=document.createElement('div');tools.className='bubble-toolbar';const speak=document.createElement('button');speak.type='button';speak.className='speak';speak.textContent='🔊 শুনুন';speak.addEventListener('click',()=>speakText(m.content));tools.appendChild(speak);bubble.appendChild(tools);}parent.appendChild(row);return bubble;}
-async function copyCode(btn){const code=btn.closest('pre')?.querySelector('code');if(!code)return;try{await navigator.clipboard.writeText(code.innerText);btn.textContent='কপি হয়েছে';setTimeout(()=>{if(btn.isConnected)btn.textContent='কপি';},1500);}catch(e){showToast('কপি করা যায়নি; কোডটি select করে copy করুন।');}}
-function speakText(text){if(!('speechSynthesis'in window)){showToast('এই browser-এ উত্তর পড়ে শোনানোর সুবিধা নেই।');return;}speechSynthesis.cancel();const clean=String(text).replace(/```[\s\S]*?```/g,' কোড ব্লক ').replace(/[`*_>#]/g,' ');const u=new SpeechSynthesisUtterance(clean);u.lang=/[\u0980-\u09FF]/.test(clean)?'bn-BD':'en-US';u.rate=1;speechSynthesis.speak(u);}
-function renderPreview(){const box=document.getElementById('previewRow');box.replaceChildren();selectedImages.forEach((img,index)=>{const chip=document.createElement('div');chip.className='attachment-chip';const pic=document.createElement('img');pic.src=img.dataUrl;pic.alt=img.name;const label=document.createElement('span');label.textContent=img.name;const rm=document.createElement('button');rm.className='remove';rm.type='button';rm.textContent='×';rm.title='ছবি বাদ দিন';rm.addEventListener('click',()=>{selectedImages.splice(index,1);renderPreview();});chip.append(pic,label,rm);box.appendChild(chip);});if(selectedZip){const chip=document.createElement('div');chip.className='attachment-chip';const label=document.createElement('span');label.textContent='📦 '+selectedZip.name+' · '+selectedZip.files.length+' source file'+(selectedZip.truncated?' (truncated)':'');const rm=document.createElement('button');rm.className='remove';rm.type='button';rm.textContent='×';rm.addEventListener('click',()=>{selectedZip=null;renderPreview();});chip.append(label,rm);box.appendChild(chip);}}
-function fileToDataUrl(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=()=>reject(new Error('ছবি পড়া যায়নি।'));reader.readAsDataURL(file);});}
-async function compressImage(file){if(file.size>10*1024*1024)throw new Error('একটি ছবি সর্বোচ্চ 10 MB হতে পারবে।');let bitmap;try{bitmap=await createImageBitmap(file);}catch(e){throw new Error('এই ছবির format browser-এ পড়া যাচ্ছে না। JPG/PNG/WebP চেষ্টা করুন।');}const scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height));const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close?.();return {name:file.name,dataUrl:canvas.toDataURL('image/jpeg',.88)};}
-async function handleAttachments(event){const files=Array.from(event.target.files||[]);event.target.value='';for(const file of files){if(file.type.startsWith('image/')){if(selectedImages.length>=4){showToast('একটি বার্তায় সর্বোচ্চ 4টি ছবি যোগ করুন।');continue;}try{const prepared=await compressImage(file);const existingBytes=selectedImages.reduce((sum,image)=>sum+Math.floor(image.dataUrl.length*.75),0);const newBytes=Math.floor(prepared.dataUrl.length*.75);if(existingBytes+newBytes>1400000){showToast('একটি বার্তায় ছবির মোট সাইজ 1.4 MB-এর মধ্যে রাখুন।');continue;}selectedImages.push(prepared);renderPreview();}catch(e){showToast(e.message);}}else if(file.name.toLowerCase().endsWith('.zip')){if(selectedZip){showToast('একটি বার্তায় একটি ZIP দিন; আগেরটি আগে বাদ দিন।');continue;}await uploadZip(file);}else{showToast('শুধু ছবি অথবা .zip ফাইল দিন।');}}}
-async function uploadZip(file){if(file.size>10*1024*1024){showToast('ZIP সর্বোচ্চ 10 MB হতে পারবে।');return;}showToast('ZIP-এর source/text file পড়া হচ্ছে…');const fd=new FormData();fd.append('archive',file);try{const res=await fetch('/api/inspect-zip',{method:'POST',body:fd});const data=await res.json();if(!res.ok)throw new Error(data.error||'ZIP পড়া যায়নি।');selectedZip={name:data.archiveName||file.name,files:Array.isArray(data.files)?data.files:[],truncated:!!data.truncated};renderPreview();showToast(selectedZip.files.length+'টি text/code file যোগ হয়েছে। ZIP-এর binary ও বড় file বাদ থাকে।');}catch(e){showToast(e.message||'ZIP server-এ পাঠানো যায়নি।');}}
-window.onNativeVoiceResult=function(text){if(!text)return;const input=document.getElementById('prompt');input.value=(input.value.trim()?input.value.trim()+' ':'')+text;autoGrow();input.focus();document.getElementById('voiceBtn').classList.remove('recording');};window.onNativeVoiceError=function(message){showToast(message||'ভয়েস শনাক্ত করা যায়নি।');document.getElementById('voiceBtn').classList.remove('recording');};function toggleVoice(){if(window.AndroidVoice&&typeof window.AndroidVoice.startVoiceInput==='function'){document.getElementById('voiceBtn').classList.add('recording');window.AndroidVoice.startVoiceInput();return;}const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SpeechRecognition){showToast('এই browser-এ speech recognition নেই। Android Chrome দিয়ে চেষ্টা করুন।');return;}if(isRecording){recognition?.stop();return;}try{recognition=new SpeechRecognition();recognition.lang='bn-BD';recognition.interimResults=true;recognition.continuous=false;recognition.maxAlternatives=1;const input=document.getElementById('prompt');const start=input.value.trim();let collected='';recognition.onstart=()=>{isRecording=true;document.getElementById('voiceBtn').classList.add('recording');showToast('শুনছি… কথা শেষ হলে থামুন।');};recognition.onresult=e=>{let finalText='',interim='';for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=t;else interim+=t;}if(finalText){collected+=finalText;input.value=(start?start+' ':'')+collected;autoGrow();}else if(interim){input.placeholder=interim;}};recognition.onerror=e=>showToast(e.error==='not-allowed'?'মাইক্রোফোন অনুমতি দিন।':'ভয়েস শনাক্ত করা যায়নি; আবার চেষ্টা করুন।');recognition.onend=()=>{isRecording=false;document.getElementById('voiceBtn').classList.remove('recording');input.placeholder='আপনার প্রশ্ন লিখুন… (Enter পাঠাবে, Shift+Enter নতুন লাইন)';input.focus();};recognition.start();}catch(e){showToast('ভয়েস শুরু করা যায়নি। Microphone permission পরীক্ষা করুন।');}}
-function handlePromptKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendPrompt();}}
-function autoGrow(){const i=document.getElementById('prompt');i.style.height='auto';i.style.height=Math.min(i.scrollHeight,180)+'px';}
-function visionCapable(provider,model){const m=(model||'').toLowerCase();if(provider==='openrouter')return m==='openrouter/free'||m.includes('gemma-4')||m.includes('inkling')||m.includes('omni')||m.includes('dots-3');if(provider==='gemini')return true;if(provider==='groq')return m.includes('vision')||m.includes('llama-4');if(provider==='mistral')return m.includes('pixtral')||m.includes('ministral-3');return true;}
-function buildApiMessage(m){let text=m.content||'';if(m.project?.files?.length){text+='\n\nAttached ZIP project: '+m.project.name+'\nThe following safe text/source files were extracted. Some files may be omitted because of size limits.\n';for(const f of m.project.files)text+='\n--- FILE: '+f.path+' ---\n'+f.content+'\n';}if(m.images?.length){return {role:m.role,content:[{type:'text',text:text||'Please analyze the attached image(s).'},...m.images.map(img=>({type:'image_url',image_url:{url:img.dataUrl}}))]};}return {role:m.role,content:text};}function buildRequestMessages(){const recent=currentMessages.slice(-30);let imageMessages=0;let imageBytes=0;for(let i=recent.length-1;i>=0;i--){const m=recent[i];if(!m.images?.length)continue;const bytes=m.images.reduce((n,img)=>n+Math.floor((img.dataUrl||'').length*.75),0);if(imageMessages>=2||imageBytes+bytes>2800000){recent[i]={...m,images:[]};continue;}imageMessages++;imageBytes+=bytes;}return [{role:'system',content:SYSTEM_PROMPT},...recent.map(buildApiMessage)];}
-function endpointFromBase(base){let u=base.trim().replace(/\/+$/,'');if(/\/chat\/completions$/i.test(u))return u;if(/\/v\d+(beta\d*)?$/i.test(u))return u+'/chat/completions';return u+'/v1/chat/completions';}
-async function requestChat(messages){const cfg=currentProfile();if(activeProvider==='custom'){const body={model:cfg.model,messages};const endpoint=endpointFromBase(cfg.endpoint||'');return fetch(endpoint,{method:'POST',headers:{Authorization:'Bearer '+cfg.apiKey,'Content-Type':'application/json'},body:JSON.stringify(body)});}return fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:activeProvider,apiKey:cfg.apiKey,model:cfg.model,messages,fallback:true})});}
-async function sendPrompt(){if(isSending)return;const input=document.getElementById('prompt');const text=input.value.trim();if(!text&&!selectedImages.length&&!selectedZip)return;const cfg=currentProfile();if(activeProvider==='custom'&&!cfg.apiKey){openSettings();showToast('Custom provider-এর API key দিন।');return;}if(activeProvider==='custom'&&!cfg.model){openSettings();showToast('Settings-এ model ID লিখুন।');return;}if(selectedImages.length&&!visionCapable(activeProvider,cfg.model||'openrouter/free')){if(activeProvider==='openrouter'){providerProfiles.openrouter.model='openrouter/free';saveProviderProfiles();updateModelLabel();showToast('ছবি বিশ্লেষণের জন্য OpenRouter Free Router বেছে নেওয়া হয়েছে।');}else{showToast('এই model image input সমর্থন নাও করতে পারে; vision/multimodal model নির্বাচন করুন।');return;}}
-  if(!activeChatId||!activeConversation())newConversation();const userMessage={role:'user',content:text||'Attached image(s)—please analyze.',images:selectedImages.map(i=>({name:i.name,dataUrl:i.dataUrl})),project:selectedZip?{name:selectedZip.name,truncated:selectedZip.truncated,files:selectedZip.files.map(f=>({path:f.path,content:f.content}))}:null};currentMessages.push(userMessage);selectedImages=[];selectedZip=null;input.value='';autoGrow();renderPreview();persistActive(true);renderMessages();
-  isSending=true;document.getElementById('sendBtn').disabled=true;document.getElementById('newChat').disabled=true;renderHistory();const pending=appendMessage({role:'assistant',content:'উত্তর তৈরি হচ্ছে…'});pending.classList.add('pending');
-  try{const messages=buildRequestMessages();const res=await requestChat(messages);let data={};try{data=await res.json();}catch(e){}if(!res.ok)throw new Error(data?.error?.message||data?.message||'API error (HTTP '+res.status+')');const raw=data?.choices?.[0]?.message?.content;const reply=typeof raw==='string'?raw:Array.isArray(raw)?raw.map(x=>typeof x==='string'?x:(x?.text||'')).join('\n'):'';if(!reply.trim())throw new Error(data?.error?.message||'মডেল থেকে উত্তর পাওয়া যায়নি।');currentMessages.push({role:'assistant',content:reply,images:[],project:null});persistActive(true);renderMessages();}
-  catch(e){pending.classList.remove('pending');pending.classList.add('error');pending.textContent='ত্রুটি: '+(e.message||'API request ব্যর্থ হয়েছে। Key, model ও provider পরীক্ষা করুন।');showToast('বার্তাটি সেভ আছে; API settings/limit পরীক্ষা করুন।');}
-  finally{isSending=false;document.getElementById('sendBtn').disabled=false;document.getElementById('newChat').disabled=false;renderHistory();}}
-function exportHistory(){if(!conversations.length){showToast('ব্যাকআপ নেওয়ার মতো chat নেই।');return;}const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),conversations},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ai-chat-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url);showToast('চ্যাট backup ডাউনলোড হয়েছে।');}
-init();
+function closeModal() { document.getElementById('keyModal').classList.remove('show'); }
+function saveKey() {
+  const v = document.getElementById('apiKeyInput').value.trim();
+  if (!v) { showToast('⚠️ Key খালি রাখা যাবে না'); return; }
+  setKey(v);
+  closeModal();
+  showToast('✅ API Key সেভ হয়েছে!');
+}
+document.getElementById('keyModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('apiKeyInput').addEventListener('keydown', e => { if (e.key === 'Enter') saveKey(); });
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimer;
+function showToast(msg, dur = 3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), dur);
+}
+
+// ============================================================
+// SIDEBAR / TOOL SWITCH
+// ============================================================
+function switchTool(id, btn) {
+  document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + id).classList.add('active');
+  if (window.innerWidth <= 640) closeSidebar();
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+// ============================================================
+// GEMINI API CALL (text)
+// ============================================================
+async function callGemini(systemPrompt, userText, extraParts) {
+  const key = getKey();
+  if (!key) { openModal(); throw new Error('API key নেই'); }
+  const contents = [];
+  if (chatHistory.length === 0 || extraParts) {
+    // single turn
+  }
+  const parts = [{ text: systemPrompt + '\n\nUser: ' + userText }];
+  if (extraParts) extraParts.forEach(p => parts.push(p));
+  const body = { contents: [{ role: 'user', parts }] };
+  const url = API_BASE + MODEL + ':generateContent?key=' + key;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    const msg = data?.error?.message || 'API Error ' + res.status;
+    throw new Error(msg);
+  }
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '(কোনো উত্তর পাওয়া যায়নি)';
+}
+
+// ============================================================
+// GEMINI CHAT (multi-turn)
+// ============================================================
+async function callGeminiChat(messages) {
+  const key = getKey();
+  if (!key) { openModal(); throw new Error('API key নেই'); }
+  const url = API_BASE + MODEL + ':generateContent?key=' + key;
+  const body = { contents: messages };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.error?.message || 'API Error ' + res.status);
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '(কোনো উত্তর পাওয়া যায়নি)';
+}
+
+// ============================================================
+// CHAT
+// ============================================================
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+}
+function chatKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+}
+function addMsg(role, text) {
+  const box = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  const av = document.createElement('div');
+  av.className = 'msg-avatar';
+  av.textContent = role === 'ai' ? '✦' : 'আ';
+  const bub = document.createElement('div');
+  bub.className = 'msg-bubble';
+  bub.innerHTML = formatText(text);
+  div.appendChild(av);
+  div.appendChild(bub);
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return bub;
+}
+function formatText(t) {
+  // code blocks
+  t = t.replace(/```([\s\S]*?)```/g, (_, code) => '<pre>' + escHtml(code.trim()) + '</pre>');
+  // inline code
+  t = t.replace(/`([^`]+)`/g, (_, c) => '<code>' + escHtml(c) + '</code>');
+  // bold
+  t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // newlines
+  t = t.replace(/\n/g, '<br/>');
+  return t;
+}
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  if (!getKey()) { openModal(); return; }
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('sendBtn').disabled = true;
+  addMsg('user', text);
+  chatHistory.push({ role: 'user', parts: [{ text }] });
+  const thinkBub = addMsg('ai', '<div class="dots"><span></span><span></span><span></span></div>');
+  thinkBub.classList.add('thinking');
+  try {
+    const reply = await callGeminiChat(chatHistory);
+    thinkBub.classList.remove('thinking');
+    thinkBub.innerHTML = formatText(reply);
+    chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+  } catch(e) {
+    thinkBub.classList.remove('thinking');
+    thinkBub.classList.add('error-bubble');
+    thinkBub.textContent = '❌ ' + e.message;
+  }
+  document.getElementById('sendBtn').disabled = false;
+  document.getElementById('chatMessages').scrollTop = 9999;
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function countChars(inputId, countId) {
+  const len = document.getElementById(inputId).value.length;
+  document.getElementById(countId).textContent = len.toLocaleString() + ' chars';
+}
+function setResult(id, text, empty = false) {
+  const el = document.getElementById(id);
+  el.innerHTML = empty ? text : formatText(text);
+  el.classList.toggle('empty', empty);
+}
+function copyResult(id) {
+  const txt = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(txt).then(() => showToast('📋 Copied!')).catch(() => showToast('Copy fail'));
+}
+function setBtn(id, loading) {
+  const btn = document.getElementById(id);
+  btn.disabled = loading;
+  btn.textContent = loading ? '⏳ অপেক্ষা করুন...' : btn.dataset.orig || btn.textContent;
+  if (!loading) btn.textContent = btn.dataset.orig;
+}
+function initBtn(id, orig) {
+  const b = document.getElementById(id); b.dataset.orig = orig;
+}
+
+// ============================================================
+// SUMMARIZE
+// ============================================================
+initBtn('sumBtn', '⚡ সংক্ষেপ করুন');
+async function runSummarize() {
+  const text = document.getElementById('sumInput').value.trim();
+  if (!text) { showToast('⚠️ টেক্সট দিন'); return; }
+  const style = document.getElementById('sumStyle').value;
+  const styleMap = {
+    short: 'সংক্ষিপ্ত ৩-৫ বাক্যে বাংলায় সারাংশ লিখুন।',
+    bullet: 'বাংলায় বুলেট পয়েন্টে মূল বিষয়গুলো লিখুন।',
+    detailed: 'বাংলায় বিস্তারিত সারাংশ লিখুন।'
+  };
+  setBtn('sumBtn', true);
+  setResult('sumResult', 'ফলাফল তৈরি হচ্ছে...', true);
+  try {
+    const sys = 'তুমি একজন বিশেষজ্ঞ সারাংশকারী। নিচের টেক্সটের ' + styleMap[style];
+    const r = await callGemini(sys, text);
+    setResult('sumResult', r);
+  } catch(e) { setResult('sumResult', '❌ ' + e.message, true); }
+  setBtn('sumBtn', false);
+}
+
+// ============================================================
+// TRANSLATE
+// ============================================================
+initBtn('transBtn', '⚡ অনুবাদ করুন');
+async function runTranslate() {
+  const text = document.getElementById('transInput').value.trim();
+  if (!text) { showToast('⚠️ টেক্সট দিন'); return; }
+  const lang = document.getElementById('transTarget').value;
+  setBtn('transBtn', true);
+  setResult('transResult', 'অনুবাদ হচ্ছে...', true);
+  try {
+    const sys = 'তুমি একজন দক্ষ অনুবাদক। নিচের টেক্সটটি ' + lang + '-তে অনুবাদ করো। শুধু অনুবাদ দাও, ব্যাখ্যা নয়।';
+    const r = await callGemini(sys, text);
+    setResult('transResult', r);
+  } catch(e) { setResult('transResult', '❌ ' + e.message, true); }
+  setBtn('transBtn', false);
+}
+
+// ============================================================
+// GRAMMAR
+// ============================================================
+initBtn('gramBtn', '⚡ ঠিক করুন');
+async function runGrammar() {
+  const text = document.getElementById('gramInput').value.trim();
+  if (!text) { showToast('⚠️ লেখা দিন'); return; }
+  const mode = document.getElementById('gramMode').value;
+  const modeMap = {
+    fix: 'শুধু grammar ও spelling ভুল সংশোধন করো।',
+    improve: 'Grammar সংশোধন করো এবং লেখার মান উন্নত করো।',
+    formal: 'Formal ও professional ভাষায় রূপান্তর করো।',
+    simple: 'সহজ ও সাবলীল ভাষায় লিখো।'
+  };
+  setBtn('gramBtn', true);
+  setResult('gramResult', 'সংশোধন হচ্ছে...', true);
+  try {
+    const sys = 'তুমি একজন ভাষা বিশেষজ্ঞ। নিচের লেখাটি ' + modeMap[mode] + ' শুধু সংশোধিত লেখা দাও।';
+    const r = await callGemini(sys, text);
+    setResult('gramResult', r);
+  } catch(e) { setResult('gramResult', '❌ ' + e.message, true); }
+  setBtn('gramBtn', false);
+}
+
+// ============================================================
+// EMAIL
+// ============================================================
+initBtn('emailBtn', '⚡ Email লিখুন');
+async function runEmail() {
+  const text = document.getElementById('emailInput').value.trim();
+  if (!text) { showToast('⚠️ Email-এর বিষয় বলুন'); return; }
+  const tone = document.getElementById('emailTone').value;
+  setBtn('emailBtn', true);
+  setResult('emailResult', 'Email তৈরি হচ্ছে...', true);
+  try {
+    const sys = 'তুমি একজন professional email writer। নিচের বিষয়ে একটি ' + tone + ' tone-এর complete email লিখো Subject, greeting, body, এবং closing সহ।';
+    const r = await callGemini(sys, text);
+    setResult('emailResult', r);
+  } catch(e) { setResult('emailResult', '❌ ' + e.message, true); }
+  setBtn('emailBtn', false);
+}
+
+// ============================================================
+// CODE REVIEW
+// ============================================================
+initBtn('codeRevBtn', '⚡ Review করুন');
+async function runCodeReview() {
+  const code = document.getElementById('codeRevInput').value.trim();
+  if (!code) { showToast('⚠️ কোড দিন'); return; }
+  const lang = document.getElementById('codeLang').value;
+  setBtn('codeRevBtn', true);
+  setResult('codeRevResult', 'Review হচ্ছে...', true);
+  try {
+    const langNote = lang === 'auto' ? '' : lang + ' ';
+    const sys = 'তুমি একজন senior software engineer। নিচের ' + langNote + 'কোডটি review করো এবং বাংলায় বলো: ১) কোড কি করছে, ২) ভালো দিক, ৩) সমস্যা ও উন্নতির সুযোগ, ৪) best practices সম্পর্কে পরামর্শ।';
+    const r = await callGemini(sys, '```\n' + code + '\n```');
+    setResult('codeRevResult', r);
+  } catch(e) { setResult('codeRevResult', '❌ ' + e.message, true); }
+  setBtn('codeRevBtn', false);
+}
+
+// ============================================================
+// BUG FINDER
+// ============================================================
+initBtn('bugBtn', '🐛 Bug খুঁজুন');
+async function runBugFind() {
+  const code = document.getElementById('bugInput').value.trim();
+  if (!code) { showToast('⚠️ কোড দিন'); return; }
+  setBtn('bugBtn', true);
+  setResult('bugResult', 'Bugs খোঁজা হচ্ছে...', true);
+  try {
+    const sys = 'তুমি একজন expert debugger। নিচের কোডে সব bugs, errors এবং সম্ভাব্য সমস্যা খুঁজে বাংলায় বলো। প্রতিটি bug-এর জন্য: ১) সমস্যা কী, ২) কোথায় আছে, ৩) কীভাবে ঠিক করবে, ৪) সংশোধিত কোড দাও।';
+    const r = await callGemini(sys, '```\n' + code + '\n```');
+    setResult('bugResult', r);
+  } catch(e) { setResult('bugResult', '❌ ' + e.message, true); }
+  setBtn('bugBtn', false);
+}
+
+// ============================================================
+// CODE EXPLAIN
+// ============================================================
+initBtn('explainBtn', '📖 ব্যাখ্যা করুন');
+async function runExplain() {
+  const code = document.getElementById('explainInput').value.trim();
+  if (!code) { showToast('⚠️ কোড দিন'); return; }
+  const level = document.getElementById('explainLevel').value;
+  const levelMap = {
+    beginner: 'একদম সহজ ভাষায়, যেন programming না জানা কেউ বুঝতে পারে',
+    intermediate: 'মাঝারি স্তরে, programming basics জানা কেউ বুঝতে পারে এমনভাবে',
+    expert: 'বিশেষজ্ঞ স্তরে, technical details সহ'
+  };
+  setBtn('explainBtn', true);
+  setResult('explainResult', 'ব্যাখ্যা তৈরি হচ্ছে...', true);
+  try {
+    const sys = 'তুমি একজন দক্ষ programming teacher। নিচের কোডটি ' + levelMap[level] + ' বাংলায় ব্যাখ্যা করো।';
+    const r = await callGemini(sys, '```\n' + code + '\n```');
+    setResult('explainResult', r);
+  } catch(e) { setResult('explainResult', '❌ ' + e.message, true); }
+  setBtn('explainBtn', false);
+}
+
+// ============================================================
+// IMAGE ANALYZE
+// ============================================================
+function handleImgFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  loadImgFile(file);
+}
+function handleImgDrop(e) {
+  e.preventDefault();
+  document.getElementById('imgDrop').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) loadImgFile(file);
+  else showToast('⚠️ শুধু ছবি ফাইল দিন');
+}
+function loadImgFile(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const dataUrl = e.target.result;
+    imgMime = file.type;
+    imgBase64 = dataUrl.split(',')[1];
+    const prev = document.getElementById('imgPreview');
+    prev.src = dataUrl;
+    prev.style.display = 'block';
+    document.getElementById('imgDrop').style.display = 'none';
+    showToast('✅ ছবি লোড হয়েছে');
+  };
+  reader.readAsDataURL(file);
+}
+function clearImage() {
+  imgBase64 = null; imgMime = null;
+  document.getElementById('imgPreview').style.display = 'none';
+  document.getElementById('imgDrop').style.display = 'flex';
+  document.getElementById('imgInput').value = '';
+  setResult('imgResult', 'বিশ্লেষণ এখানে দেখাবে...', true);
+}
+initBtn('imgBtn', '🔍 Analyze করুন');
+async function runImageAnalyze() {
+  if (!imgBase64) { showToast('⚠️ আগে একটি ছবি select করুন'); return; }
+  if (!getKey()) { openModal(); return; }
+  const prompt = document.getElementById('imgPrompt').value.trim() ||
+    'এই ছবিটি বিস্তারিতভাবে বাংলায় বর্ণনা করো। ছবিতে কী আছে, কোনো টেক্সট থাকলে তা পড়ো, এবং যেকোনো গুরুত্বপূর্ণ বিষয় উল্লেখ করো।';
+  setBtn('imgBtn', true);
+  setResult('imgResult', 'ছবি বিশ্লেষণ হচ্ছে...', true);
+  try {
+    const key = getKey();
+    const url = API_BASE + MODEL + ':generateContent?key=' + key;
+    const body = {
+      contents: [{
+        role: 'user',
+        parts: [
+          { text: prompt },
+          { inline_data: { mime_type: imgMime, data: imgBase64 } }
+        ]
+      }]
+    };
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data?.error?.message || 'API Error');
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '(উত্তর পাওয়া যায়নি)';
+    setResult('imgResult', text);
+  } catch(e) { setResult('imgResult', '❌ ' + e.message, true); }
+  setBtn('imgBtn', false);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+updateKeyUI();
+if (!getKey()) { setTimeout(openModal, 800); }
 </script>
 </body>
 </html>
