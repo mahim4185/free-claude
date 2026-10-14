@@ -1,12 +1,18 @@
 {
-  "name": "free-claude-web",
-  "version": "1.0.0",
-  "description": "Free Claude Code Web UI Client",
+  "name": "ai-developer-workspace",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Bangla/English AI coding workspace with provider settings, image input, ZIP source inspection, voice input, and saved chat history.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.21.2",
+    "multer": "^2.4.0",
+    "yauzl": "^3.4.0"
   }
 }
