@@ -1,273 +1,280 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Developer & Assistant</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0b0d12" />
+  <title>AI Developer Workspace</title>
   <style>
     :root {
-      --bg-main: #090d16;
-      --bg-card: #0f172a;
-      --bg-panel: #131d36;
-      --bg-bubble: #1e293b;
-      --border: #1e2d4d;
-      --accent: #2563eb;
-      --accent-green: #10b981;
-      --accent-red: #ef4444;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
+      color-scheme: dark;
+      --page: #0b0d12;
+      --sidebar: #10131b;
+      --panel: #151923;
+      --panel-2: #1b202b;
+      --line: #252b38;
+      --text: #f3f5f8;
+      --muted: #929aaa;
+      --accent: #8b7cff;
+      --accent-2: #6c5ce7;
+      --green: #49d3a1;
+      --red: #ff707d;
+      --shadow: 0 24px 80px rgba(0, 0, 0, .42);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; }
     body {
-      font-family: 'Inter', 'Hind Siliguri', sans-serif;
-      background: var(--bg-main);
-      color: var(--text);
-      height: 100vh;
-      display: flex;
+      min-width: 320px;
       overflow: hidden;
-    }
-    .sidebar {
-      width: 280px;
-      background: var(--bg-card);
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      transition: all 0.3s;
-      z-index: 20;
-    }
-    .sidebar-header {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 700;
-      color: #60a5fa;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .new-chat-btn {
-      margin: 12px 16px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 10px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .history-list { flex: 1; overflow-y: auto; padding: 10px; }
-    .history-item {
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 6px;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.88rem;
-    }
-    .history-item.active, .history-item:hover { background: var(--bg-bubble); color: var(--text); }
-    .main-chat {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-    .top-nav {
-      height: 56px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      background: rgba(15, 23, 42, 0.8);
-    }
-    .status-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--accent-green);
-      display: inline-block;
-      margin-right: 6px;
-    }
-    .icon-btn {
-      background: var(--bg-panel);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      border-radius: 6px;
-      padding: 6px 12px;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
-    .messages-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .message-row { display: flex; gap: 10px; max-width: 850px; margin: 0 auto; width: 100%; }
-    .avatar {
-      width: 32px; height: 32px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: bold; font-size: 0.8rem; flex-shrink: 0;
-    }
-    .avatar.user { background: var(--accent); color: white; }
-    .avatar.assistant { background: var(--accent-green); color: #022c22; }
-    .bubble {
-      flex: 1;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      line-height: 1.6;
-      font-size: 0.95rem;
-      word-break: break-word;
-    }
-    .user-row .bubble { background: #1e293b; border-color: #334155; }
-    pre {
-      background: #050811;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      margin: 10px 0;
-      overflow-x: auto;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.88rem;
-    }
-    .code-top {
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      margin-bottom: 6px;
-      border-bottom: 1px solid #1e293b;
-      padding-bottom: 4px;
-    }
-    .copy-btn {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      border-radius: 4px;
-      padding: 2px 8px;
-      cursor: pointer;
-    }
-    code { font-family: 'Fira Code', monospace; background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; }
-    pre code { background: none; padding: 0; }
-    .input-footer {
-      padding: 12px 16px;
-      background: var(--bg-card);
-      border-top: 1px solid var(--border);
-    }
-    .input-box-wrapper { max-width: 850px; margin: 0 auto; display: flex; gap: 8px; }
-    textarea {
-      flex: 1;
-      background: var(--bg-panel);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
       color: var(--text);
-      font-family: inherit;
-      outline: none;
-      resize: none;
-      min-height: 50px;
+      background: var(--page);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Bengali", sans-serif;
     }
-    .send-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0 18px;
-      cursor: pointer;
-      font-weight: bold;
+    button, input, textarea, select { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
     }
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7);
-      display: none; align-items: center; justify-content: center; z-index: 100;
+    .app-shell { display: flex; width: 100%; height: 100dvh; min-height: 0; }
+    .sidebar {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      flex: 0 0 292px;
+      flex-direction: column;
+      min-height: 0;
+      padding: 18px 14px 12px;
+      background: linear-gradient(180deg, #11141d 0%, #0e1118 100%);
+      border-right: 1px solid var(--line);
     }
-    .modal-content {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      width: 90%; max-width: 450px; padding: 20px;
+    .brand-row { display: flex; align-items: center; gap: 11px; padding: 2px 5px 19px; }
+    .brand-mark {
+      display: grid; width: 38px; height: 38px; place-items: center; flex: 0 0 auto;
+      border: 1px solid rgba(169, 157, 255, .32); border-radius: 13px;
+      background: linear-gradient(145deg, #342b68, #191d31 75%);
+      color: #c7bfff; font-size: 19px; box-shadow: 0 8px 24px rgba(91, 76, 197, .18);
     }
-    .form-group { margin-bottom: 14px; }
-    label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
-    input, select {
-      width: 100%; background: var(--bg-panel); border: 1px solid var(--border);
-      color: var(--text); padding: 10px; border-radius: 6px; outline: none;
+    .brand-name { font-size: 14px; font-weight: 720; letter-spacing: .01em; }
+    .brand-caption { margin-top: 3px; color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .16em; }
+    .mobile-close { display: none !important; margin-left: auto; }
+    .new-chat-btn {
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      width: 100%; min-height: 44px; padding: 9px 12px;
+      border: 1px solid rgba(165, 153, 255, .42); border-radius: 11px;
+      background: linear-gradient(135deg, #7667ec, #5548c7);
+      color: #fff; font-size: 13px; font-weight: 680; cursor: pointer;
+      box-shadow: 0 7px 22px rgba(87, 72, 199, .20); transition: filter .15s, transform .15s;
     }
-    .save-btn { width: 100%; background: var(--accent); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-    @media (max-width: 768px) {
-      .sidebar { position: absolute; left: -280px; height: 100%; }
-      .sidebar.open { left: 0; }
+    .new-chat-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .new-chat-btn:disabled { opacity: .55; cursor: wait; transform: none; }
+    .search-box { position: relative; margin: 17px 0 18px; }
+    .search-icon { position: absolute; top: 50%; left: 12px; transform: translateY(-51%); color: #788193; pointer-events: none; font-size: 15px; }
+    .search-box input {
+      width: 100%; height: 38px; padding: 0 11px 0 35px;
+      border: 1px solid var(--line); border-radius: 9px; outline: none;
+      background: #151923; color: var(--text); font-size: 12px;
+    }
+    .search-box input::placeholder { color: #778091; }
+    .history-heading { display: flex; align-items: center; justify-content: space-between; padding: 0 7px 8px; color: #858d9d; font-size: 10px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+    .history-count { color: #6f7888; font-size: 10px; font-weight: 600; letter-spacing: 0; }
+    .history-list { flex: 1; min-height: 0; overflow: auto; padding: 1px 0 8px; scrollbar-width: thin; scrollbar-color: #303746 transparent; }
+    .history-empty { padding: 18px 10px; color: #788091; font-size: 12px; line-height: 1.6; text-align: center; }
+    .history-entry { display: flex; align-items: stretch; gap: 3px; margin: 2px 0; padding: 2px; border: 1px solid transparent; border-radius: 9px; transition: background .15s, border-color .15s; }
+    .history-entry:hover { background: rgba(255,255,255,.035); }
+    .history-entry.active { border-color: rgba(147, 134, 255, .22); background: rgba(133, 118, 255, .10); }
+    .history-open {
+      display: flex; min-width: 0; flex: 1; flex-direction: column; justify-content: center; gap: 4px;
+      padding: 8px 8px; border: 0; border-radius: 7px; background: transparent; text-align: left; cursor: pointer;
+    }
+    .history-title { overflow: hidden; color: #d7dbe4; font-size: 12px; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+    .history-meta { color: #788091; font-size: 10px; }
+    .history-delete {
+      align-self: center; width: 29px; height: 29px; border: 0; border-radius: 7px;
+      background: transparent; color: #737c8b; cursor: pointer; opacity: 0; transition: opacity .15s, background .15s, color .15s;
+    }
+    .history-entry:hover .history-delete, .history-entry:focus-within .history-delete { opacity: 1; }
+    .history-delete:hover { background: rgba(255,112,125,.12); color: var(--red); }
+    .sidebar-footer { margin-top: 8px; padding: 12px 7px 2px; border-top: 1px solid var(--line); }
+    .local-save-note { display: flex; align-items: center; gap: 8px; color: #8992a1; font-size: 10px; line-height: 1.45; }
+    .local-save-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px rgba(73,211,161,.45); }
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 5px 0; border: 0; background: transparent; color: #9fa7b5; font-size: 11px; cursor: pointer; }
+    .export-btn:hover { color: #fff; }
+    .chat-panel { display: flex; position: relative; flex: 1; flex-direction: column; min-width: 0; min-height: 0; background: radial-gradient(ellipse at 54% -15%, rgba(89, 77, 171, .12), transparent 48%), var(--page); }
+    .topbar {
+      display: flex; flex: 0 0 66px; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 0 clamp(15px, 3vw, 34px); border-bottom: 1px solid rgba(255,255,255,.055);
+      background: rgba(12, 14, 20, .78); backdrop-filter: blur(12px);
+    }
+    .topbar-left { display: flex; min-width: 0; align-items: center; gap: 12px; }
+    .icon-btn {
+      display: inline-grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center;
+      border: 1px solid var(--line); border-radius: 9px; background: #161a24; color: #c5cad4; cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .icon-btn:hover { background: #202532; border-color: #3a4151; }
+    .chat-title-label { overflow: hidden; max-width: min(50vw, 540px); color: #e4e7ee; font-size: 13px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+    .model-line { display: flex; align-items: center; gap: 7px; margin-top: 4px; color: #8c95a5; font-size: 10px; }
+    .model-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+    .settings-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 9px; background: #151923; color: #cbd0da; font-size: 11px; cursor: pointer; }
+    .settings-btn:hover { background: #202532; }
+    .messages-container { display: flex; flex: 1; flex-direction: column; gap: 20px; overflow-y: auto; padding: 32px clamp(16px, 4vw, 42px); scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #303746 transparent; }
+    .welcome-state { display: flex; width: min(820px, 100%); flex: 1; flex-direction: column; align-items: center; justify-content: center; align-self: center; padding: 22px 0 32px; text-align: center; }
+    .welcome-icon { display: grid; width: 62px; height: 62px; place-items: center; margin-bottom: 20px; border: 1px solid rgba(164,151,255,.30); border-radius: 21px; background: linear-gradient(145deg, rgba(112,98,221,.24), rgba(41,45,72,.55)); color: #c9c1ff; font-size: 28px; box-shadow: 0 12px 42px rgba(82,68,180,.16); }
+    .welcome-state h1 { margin: 0; color: #f3f4f8; font-size: clamp(23px, 3vw, 33px); font-weight: 720; letter-spacing: -.035em; }
+    .welcome-state p { max-width: 520px; margin: 11px 0 25px; color: #959dad; font-size: 13px; line-height: 1.75; }
+    .suggestion-grid { display: grid; width: min(620px, 100%); grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .suggestion-btn { min-height: 68px; padding: 12px 14px; border: 1px solid #252b38; border-radius: 12px; background: rgba(21,25,35,.78); color: #d2d6df; text-align: left; font-size: 12px; line-height: 1.5; cursor: pointer; transition: border-color .15s, transform .15s, background .15s; }
+    .suggestion-btn:hover { transform: translateY(-2px); border-color: rgba(147,134,255,.46); background: #1a1e2a; }
+    .suggestion-btn span { display: block; margin-bottom: 4px; color: #9c91ff; font-size: 11px; font-weight: 700; }
+    .message-row { display: flex; width: min(900px, 100%); align-items: flex-start; gap: 12px; align-self: center; }
+    .message-row.user-row { flex-direction: row-reverse; }
+    .avatar { display: grid; width: 31px; height: 31px; flex: 0 0 31px; place-items: center; border: 1px solid #343a49; border-radius: 10px; background: #191d29; color: #c4bbff; font-size: 10px; font-weight: 760; }
+    .user-row .avatar { border-color: rgba(126,111,244,.35); background: linear-gradient(145deg, #6255cf, #40399a); color: #fff; }
+    .bubble { max-width: min(790px, calc(100% - 45px)); padding: 12px 15px; border: 1px solid #252b37; border-radius: 4px 14px 14px 14px; background: #141821; color: #e2e5eb; font-size: 13px; line-height: 1.78; overflow-wrap: anywhere; }
+    .user-row .bubble { border-color: rgba(126,111,244,.18); border-radius: 14px 4px 14px 14px; background: #211f36; color: #f0effa; }
+    .bubble.error { border-color: rgba(255,112,125,.30); background: rgba(80,31,41,.35); color: #ffbdc3; }
+    .bubble.pending { color: #aab1bf; }
+    .bubble strong { color: #fff; }
+    .bubble code { padding: 2px 5px; border: 1px solid #303746; border-radius: 5px; background: #202531; color: #d5cfff; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; }
+    .bubble pre { overflow: auto; margin: 10px 0 3px; padding: 0; border: 1px solid #303746; border-radius: 9px; background: #0b0e14; }
+    .code-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 10px; border-bottom: 1px solid #252b38; color: #9099aa; font-size: 10px; }
+    .copy-btn { padding: 4px 8px; border: 1px solid #333a49; border-radius: 6px; background: #191e28; color: #cbd0da; font-size: 10px; cursor: pointer; }
+    .copy-btn:hover { background: #252b38; color: #fff; }
+    .bubble pre code { display: block; padding: 12px; border: 0; border-radius: 0; background: transparent; color: #e2e7ef; white-space: pre; }
+    .input-footer { padding: 10px clamp(14px, 4vw, 38px) 14px; border-top: 1px solid rgba(255,255,255,.055); background: rgba(12,14,20,.75); }
+    .composer-wrap { display: flex; width: min(900px, 100%); align-items: flex-end; gap: 10px; margin: 0 auto; padding: 8px; border: 1px solid #303645; border-radius: 14px; background: #151923; box-shadow: 0 10px 36px rgba(0,0,0,.17); }
+    .composer-wrap:focus-within { border-color: rgba(144,130,255,.62); box-shadow: 0 0 0 3px rgba(123,107,235,.10); }
+    .prompt-input { display: block; width: 100%; min-height: 40px; max-height: 180px; resize: none; padding: 10px 9px; border: 0; outline: none; background: transparent; color: var(--text); font-size: 13px; line-height: 1.55; }
+    .prompt-input::placeholder { color: #788192; }
+    .send-btn { display: grid; width: 38px; height: 38px; flex: 0 0 38px; place-items: center; border: 0; border-radius: 10px; background: var(--accent-2); color: #fff; font-size: 17px; cursor: pointer; transition: background .15s, transform .15s; }
+    .send-btn:hover { transform: translateY(-1px); background: #7567ed; }
+    .send-btn:disabled { opacity: .48; cursor: wait; transform: none; }
+    .composer-note { width: min(900px, 100%); margin: 8px auto 0; color: #717a8a; font-size: 10px; text-align: center; }
+    .sidebar-backdrop { display: none; }
+    .modal-overlay { position: fixed; z-index: 100; inset: 0; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(0,0,0,.68); backdrop-filter: blur(7px); }
+    .modal-overlay.open { display: flex; }
+    .modal-card { width: min(460px, 100%); padding: 22px; border: 1px solid #343b4a; border-radius: 16px; background: #141821; box-shadow: var(--shadow); }
+    .modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; margin-bottom: 18px; }
+    .modal-header h2 { margin: 0; font-size: 17px; }
+    .modal-header p { margin: 6px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .modal-close { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 8px; background: #1a1e28; color: #afb6c2; cursor: pointer; }
+    .form-group { margin: 14px 0; }
+    .form-group label { display: block; margin-bottom: 7px; color: #bbc1cd; font-size: 11px; font-weight: 650; }
+    .form-group input, .form-group select { width: 100%; min-height: 41px; padding: 9px 11px; border: 1px solid #333a48; border-radius: 9px; outline: none; background: #0f1219; color: #edf0f6; font-size: 12px; }
+    .form-help { margin-top: 6px; color: #7f8796; font-size: 10px; line-height: 1.55; }
+    .save-btn { width: 100%; min-height: 42px; margin-top: 3px; border: 0; border-radius: 9px; background: linear-gradient(135deg, #7667ec, #5548c7); color: white; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .toast { position: fixed; z-index: 150; right: 18px; bottom: 18px; max-width: min(420px, calc(100vw - 36px)); padding: 11px 14px; border: 1px solid #3b4251; border-radius: 10px; background: #1b202b; color: #e8ebf1; box-shadow: var(--shadow); font-size: 12px; line-height: 1.5; opacity: 0; pointer-events: none; transform: translateY(8px); transition: opacity .18s, transform .18s; }
+    .toast.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 760px) {
+      .sidebar { position: fixed; inset: 0 auto 0 0; width: min(300px, 86vw); height: 100dvh; transform: translateX(-102%); transition: transform .2s ease; box-shadow: var(--shadow); }
+      .sidebar.open { transform: translateX(0); }
+      .mobile-close { display: inline-grid !important; }
+      .sidebar-backdrop.open { position: fixed; z-index: 15; inset: 0; display: block; background: rgba(0,0,0,.52); }
+      .topbar { flex-basis: 58px; padding: 0 12px; }
+      .topbar-left { gap: 9px; }
+      .messages-container { padding: 22px 14px; }
+      .welcome-state { justify-content: center; padding: 20px 0; }
+      .suggestion-grid { grid-template-columns: 1fr; gap: 8px; }
+      .suggestion-btn { min-height: 57px; }
+      .bubble { max-width: calc(100% - 43px); padding: 10px 12px; font-size: 12px; }
+      .input-footer { padding: 9px 10px 11px; }
+      .composer-note { font-size: 9px; }
+      .settings-btn { width: 36px; justify-content: center; padding: 0; font-size: 0; }
+      .settings-btn span { font-size: 15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
     }
   </style>
 </head>
 <body>
-
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <span>AI Developer Workspace</span>
-      <span style="cursor: pointer;" onclick="toggleSidebar()">✕</span>
-    </div>
-    <button class="new-chat-btn" onclick="startNewChat()">+ New Chat</button>
-    <div class="history-list" id="historyList"></div>
-  </aside>
-
-  <main class="main-chat">
-    <header class="top-nav">
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <button class="icon-btn" onclick="toggleSidebar()">☰</button>
-        <div style="font-size: 0.85rem;"><span class="status-dot"></span><span id="currentModelDisplay">DeepSeek R1 / V3</span></div>
-      </div>
-      <button class="icon-btn" onclick="openSettings()">⚙️ Settings</button>
-    </header>
-
-    <div class="messages-container" id="messagesContainer">
-      <div class="message-row">
-        <div class="avatar assistant">AI</div>
-        <div class="bubble">
-          স্বাগতম! আমি আপনার অল-ইন-ওয়ান কোডিং ও এআই সহকারী।
-          <br><br>
-          • <strong>বাংলা ও ইংরেজি:</strong> আপনি যেকোনো ভাষায় প্রশ্ন করতে পারেন।<br>
-          • <strong>ওয়েবসাইট ও অ্যাপ তৈরি:</strong> HTML, CSS, JavaScript, Node.js বা পাইথন কোড তৈরি করে দিতে পারব।<br>
-          • শুরু করার জন্য উপরের <strong>⚙️ Settings</strong>-এ গিয়ে আপনার OpenRouter API Key বসিয়ে সেভ করুন।
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="চ্যাট সাইডবার">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">✦</div>
+        <div>
+          <div class="brand-name">AI Developer</div>
+          <div class="brand-caption">PERSONAL WORKSPACE</div>
         </div>
+        <button class="icon-btn mobile-close" id="mobileCloseBtn" type="button" aria-label="সাইডবার বন্ধ করুন">×</button>
       </div>
-    </div>
 
-    <footer class="input-footer">
-      <div class="input-box-wrapper">
-        <textarea id="promptInput" rows="1" placeholder="ওয়েবসাইট তৈরি বা যেকোনো কোডিং প্রশ্ন লিখুন..." onkeydown="handleKeyDown(event)"></textarea>
-        <button class="send-btn" id="sendBtn" onclick="sendPrompt()">পাঠান</button>
-      </div>
-    </footer>
-  </main>
+      <button class="new-chat-btn" id="newChatBtn" type="button"><span aria-hidden="true">＋</span> নতুন চ্যাট</button>
 
-  <div class="modal-overlay" id="settingsModal">
-    <div class="modal-content">
-      <h3 style="margin-bottom: 14px; font-size: 1rem;">এপিআই কনফিগারেশন</h3>
-      <div class="form-group">
-        <label>OpenRouter API Key (নতুন কী দিন)</label>
-        <input type="password" id="settingApiKey" placeholder="sk-or-v1-..." />
+      <div class="search-box">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="historySearch" type="search" placeholder="পুরোনো চ্যাট খুঁজুন…" aria-label="চ্যাট খুঁজুন" />
+      </div>
+
+      <div class="history-heading"><span>চ্যাট হিস্ট্রি</span><span class="history-count" id="historyCount">0</span></div>
+      <div class="history-list" id="historyList" aria-label="সেভ করা চ্যাট"></div>
+
+      <div class="sidebar-footer">
+        <div class="local-save-note"><span class="local-save-dot"></span><span>চ্যাট এই ব্রাউজারেই স্বয়ংক্রিয়ভাবে সেভ হয়</span></div>
+        <button class="export-btn" id="exportBtn" type="button"><span aria-hidden="true">⇩</span> চ্যাট ব্যাকআপ ডাউনলোড</button>
+      </div>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <main class="chat-panel">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn" id="menuBtn" type="button" aria-label="সাইডবার খুলুন">☰</button>
+          <div style="min-width:0">
+            <div class="chat-title-label" id="chatTitleLabel">নতুন চ্যাট</div>
+            <div class="model-line"><span class="model-dot"></span><span id="currentModelDisplay">OpenRouter Free</span></div>
+          </div>
+        </div>
+        <button class="settings-btn" id="settingsBtn" type="button" aria-label="সেটিংস"><span aria-hidden="true">⚙</span> সেটিংস</button>
+      </header>
+
+      <section class="messages-container" id="messagesContainer" aria-live="polite" aria-label="চ্যাট বার্তা"></section>
+
+      <footer class="input-footer">
+        <div class="composer-wrap">
+          <textarea class="prompt-input" id="promptInput" rows="1" placeholder="আপনার প্রশ্ন লিখুন… (Enter পাঠাবে, Shift+Enter নতুন লাইন)" aria-label="আপনার বার্তা লিখুন"></textarea>
+          <button class="send-btn" id="sendBtn" type="button" aria-label="বার্তা পাঠান" title="পাঠান">↑</button>
+        </div>
+        <div class="composer-note">উত্তর AI দ্বারা তৈরি • চ্যাট হিস্ট্রি এই ডিভাইসের ব্রাউজারে সেভ হয়</div>
+      </footer>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 id="settingsTitle">API সেটিংস</h2>
+          <p>আপনার OpenRouter key ও পছন্দের মডেল নির্বাচন করুন।</p>
+        </div>
+        <button class="modal-close" id="closeSettingsBtn" type="button" aria-label="বন্ধ করুন">×</button>
       </div>
       <div class="form-group">
-        <label>AI মডেল (কোডিং ও বাংলায় সেরা)</label>
+        <label for="settingApiKey">OpenRouter API key</label>
+        <input id="settingApiKey" type="password" autocomplete="off" placeholder="sk-or-v1-…" />
+        <div class="form-help">Keyটি এই ব্রাউজারের local storage-এ থাকে। এটি কারও সঙ্গে শেয়ার করবেন না।</div>
+      </div>
+      <div class="form-group">
+        <label for="settingModel">AI মডেল</label>
         <select id="settingModel">
-          <option value="openrouter/free">OpenRouter Free Router (সুপারিশকৃত)</option>
-          <option value="google/gemma-4-31b-it:free">Google Gemma 4 31B (ফ্রি)</option>
-          <option value="nvidia/nemotron-3.5-lightning:free">NVIDIA Nemotron 3.5 Lightning (ফ্রি)</option>
-          <option value="cohere/north-mini-code:free">Cohere North Mini Code (কোডিং - ফ্রি)</option>
+          <option value="openrouter/free">OpenRouter Free Router — সুপারিশকৃত</option>
+          <option value="google/gemma-4-31b-it:free">Google Gemma 4 31B — ফ্রি</option>
+          <option value="nvidia/nemotron-3.5-lightning:free">NVIDIA Nemotron 3.5 Lightning — ফ্রি</option>
+          <option value="cohere/north-mini-code:free">Cohere North Mini Code — ফ্রি</option>
         </select>
       </div>
-      <button class="save-btn" onclick="saveSettings()">Save & Connect</button>
+      <button class="save-btn" id="saveSettingsBtn" type="button">সেভ করুন</button>
     </div>
   </div>
 
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
-    let API_KEY = localStorage.getItem('openrouter_key') || '';
+    'use strict';
+
+    const CHAT_STORAGE_KEY = 'freeClaude.conversations.v1';
+    const ACTIVE_CHAT_KEY = 'freeClaude.activeConversation.v1';
     const DEFAULT_MODEL = 'openrouter/free';
     const AVAILABLE_MODELS = [
       'openrouter/free',
@@ -275,148 +282,488 @@
       'nvidia/nemotron-3.5-lightning:free',
       'cohere/north-mini-code:free'
     ];
-    let MODEL = localStorage.getItem('openrouter_model') || DEFAULT_MODEL;
+    const SYSTEM_PROMPT = 'You are an expert full-stack developer and AI assistant. The user can speak in Bengali or English. When the user asks in Bengali, explain concepts in fluent Bengali, but provide complete, practical code with clear comments. When asked to build a website or app, provide working HTML, CSS, JavaScript, Node.js, or Python code as appropriate.';
 
-    // পুরোনো/অকার্যকর মডেল আইডি থাকলে স্বয়ংক্রিয়ভাবে নতুন ডিফল্ট মডেলে বদলায়।
+    let API_KEY = localStorage.getItem('openrouter_key') || '';
+    let MODEL = localStorage.getItem('openrouter_model') || DEFAULT_MODEL;
     if (!AVAILABLE_MODELS.includes(MODEL)) {
       MODEL = DEFAULT_MODEL;
       localStorage.setItem('openrouter_model', MODEL);
     }
 
+    let conversations = loadConversations();
+    let activeChatId = localStorage.getItem(ACTIVE_CHAT_KEY) || null;
     let currentMessages = [];
+    let isSending = false;
+    let toastTimer = null;
 
-    window.onload = () => {
-      document.getElementById('settingApiKey').value = API_KEY;
-      document.getElementById('settingModel').value = MODEL;
-      updateModelLabel();
-    };
-
-    function updateModelLabel() {
-      const display = MODEL.split('/')[1] || MODEL;
-      document.getElementById('currentModelDisplay').innerText = display;
+    function loadConversations() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(CHAT_STORAGE_KEY) || '[]');
+        if (!Array.isArray(parsed)) return [];
+        return parsed.filter(item => item && typeof item.id === 'string' && Array.isArray(item.messages))
+          .map(item => ({
+            id: item.id,
+            title: typeof item.title === 'string' ? item.title : 'নতুন চ্যাট',
+            createdAt: Number(item.createdAt) || Date.now(),
+            updatedAt: Number(item.updatedAt) || Number(item.createdAt) || Date.now(),
+            messages: item.messages.filter(message => message && ['user', 'assistant'].includes(message.role) && typeof message.content === 'string')
+              .map(message => ({ role: message.role, content: message.content }))
+          }))
+          .sort((a, b) => b.updatedAt - a.updatedAt);
+      } catch (error) {
+        console.warn('Saved chat history could not be read:', error);
+        return [];
+      }
     }
 
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-    function openSettings() { document.getElementById('settingsModal').style.display = 'flex'; }
-    function closeSettings() { document.getElementById('settingsModal').style.display = 'none'; }
+    function persistConversations() {
+      try {
+        conversations.sort((a, b) => b.updatedAt - a.updatedAt);
+        localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(conversations));
+        return true;
+      } catch (error) {
+        console.error('Chat history could not be saved:', error);
+        showToast('ব্রাউজার স্টোরেজ পূর্ণ হতে পারে। কিছু পুরোনো চ্যাট মুছে বা ব্যাকআপ নিন।');
+        return false;
+      }
+    }
+
+    function makeId() {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
+      return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+    }
+
+    function getActiveConversation() {
+      return conversations.find(chat => chat.id === activeChatId) || null;
+    }
+
+    function createConversation() {
+      const now = Date.now();
+      const chat = { id: makeId(), title: 'নতুন চ্যাট', createdAt: now, updatedAt: now, messages: [] };
+      conversations.unshift(chat);
+      activeChatId = chat.id;
+      localStorage.setItem(ACTIVE_CHAT_KEY, activeChatId);
+      return chat;
+    }
+
+    function makeTitle(messages) {
+      const firstPrompt = messages.find(message => message.role === 'user')?.content || 'নতুন চ্যাট';
+      const cleaned = firstPrompt.replace(/\s+/g, ' ').trim();
+      const chars = Array.from(cleaned);
+      return chars.length > 42 ? chars.slice(0, 42).join('') + '…' : (cleaned || 'নতুন চ্যাট');
+    }
+
+    function saveActiveConversation(touch = true) {
+      const chat = getActiveConversation();
+      if (!chat) return true;
+      chat.messages = currentMessages.map(message => ({ role: message.role, content: message.content }));
+      chat.title = makeTitle(chat.messages);
+      if (touch) chat.updatedAt = Date.now();
+      localStorage.setItem(ACTIVE_CHAT_KEY, chat.id);
+      const saved = persistConversations();
+      renderHistory();
+      updateChatTitle();
+      return saved;
+    }
+
+    function initialize() {
+      if (activeChatId && getActiveConversation()) {
+        currentMessages = getActiveConversation().messages.map(message => ({ ...message }));
+      } else {
+        activeChatId = null;
+        localStorage.removeItem(ACTIVE_CHAT_KEY);
+      }
+      document.getElementById('settingApiKey').value = API_KEY;
+      document.getElementById('settingModel').value = MODEL;
+      document.getElementById('historySearch').addEventListener('input', renderHistory);
+      document.getElementById('newChatBtn').addEventListener('click', startNewChat);
+      document.getElementById('menuBtn').addEventListener('click', openSidebar);
+      document.getElementById('mobileCloseBtn').addEventListener('click', closeSidebar);
+      document.getElementById('sidebarBackdrop').addEventListener('click', closeSidebar);
+      document.getElementById('settingsBtn').addEventListener('click', openSettings);
+      document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
+      document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+      document.getElementById('settingsModal').addEventListener('click', event => {
+        if (event.target.id === 'settingsModal') closeSettings();
+      });
+      document.getElementById('sendBtn').addEventListener('click', sendPrompt);
+      document.getElementById('exportBtn').addEventListener('click', exportHistory);
+      document.getElementById('promptInput').addEventListener('keydown', handleKeyDown);
+      document.getElementById('promptInput').addEventListener('input', autoGrowInput);
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          closeSettings();
+          closeSidebar();
+        }
+      });
+      renderHistory();
+      renderMessages();
+      updateChatTitle();
+      updateModelLabel();
+    }
+
+    function updateChatTitle() {
+      const chat = getActiveConversation();
+      document.getElementById('chatTitleLabel').textContent = chat ? chat.title : 'নতুন চ্যাট';
+    }
+
+    function updateModelLabel() {
+      const names = {
+        'openrouter/free': 'OpenRouter Free Router',
+        'google/gemma-4-31b-it:free': 'Google Gemma 4 31B',
+        'nvidia/nemotron-3.5-lightning:free': 'NVIDIA Nemotron 3.5 Lightning',
+        'cohere/north-mini-code:free': 'Cohere North Mini Code'
+      };
+      document.getElementById('currentModelDisplay').textContent = names[MODEL] || MODEL;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('visible'), 3600);
+    }
+
+    function openSettings() {
+      document.getElementById('settingApiKey').value = API_KEY;
+      document.getElementById('settingModel').value = MODEL;
+      document.getElementById('settingsModal').classList.add('open');
+      setTimeout(() => document.getElementById('settingApiKey').focus(), 50);
+    }
+
+    function closeSettings() { document.getElementById('settingsModal').classList.remove('open'); }
 
     function saveSettings() {
       API_KEY = document.getElementById('settingApiKey').value.trim();
-      MODEL = document.getElementById('settingModel').value;
-      if (!MODEL) {
-        alert('দয়া করে একটি AI মডেল নির্বাচন করুন।');
+      const selectedModel = document.getElementById('settingModel').value;
+      if (!AVAILABLE_MODELS.includes(selectedModel)) {
+        showToast('একটি বৈধ মডেল নির্বাচন করুন।');
         return;
       }
+      MODEL = selectedModel;
       localStorage.setItem('openrouter_key', API_KEY);
       localStorage.setItem('openrouter_model', MODEL);
       updateModelLabel();
       closeSettings();
-      alert('সেটিংস সেভ হয়েছে!');
+      showToast(API_KEY ? 'সেটিংস সেভ হয়েছে। এখন চ্যাট করতে পারেন।' : 'সেটিংস সেভ হয়েছে। চ্যাটের আগে API key দিন।');
+    }
+
+    function openSidebar() {
+      document.getElementById('sidebar').classList.add('open');
+      document.getElementById('sidebarBackdrop').classList.add('open');
+    }
+
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarBackdrop').classList.remove('open');
     }
 
     function startNewChat() {
+      if (isSending) { showToast('উত্তর তৈরি হওয়া শেষ হলে নতুন চ্যাট শুরু করুন।'); return; }
+      saveActiveConversation(false);
+      activeChatId = null;
       currentMessages = [];
-      document.getElementById('messagesContainer').innerHTML = `
-        <div class="message-row">
-          <div class="avatar assistant">AI</div>
-          <div class="bubble">নতুন চ্যাট শুরু হয়েছে। কি ধরনের ওয়েবসাইট বা কোড লিখতে চান বলুন।</div>
-        </div>
-      `;
-      if (window.innerWidth <= 768) toggleSidebar();
+      localStorage.removeItem(ACTIVE_CHAT_KEY);
+      renderMessages();
+      renderHistory();
+      updateChatTitle();
+      closeSidebar();
+      document.getElementById('promptInput').focus();
     }
 
-    function handleKeyDown(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
+    function openConversation(id) {
+      if (isSending) { showToast('উত্তর তৈরি হওয়া শেষ হলে অন্য চ্যাট খুলুন।'); return; }
+      saveActiveConversation(false);
+      const chat = conversations.find(item => item.id === id);
+      if (!chat) return;
+      activeChatId = chat.id;
+      localStorage.setItem(ACTIVE_CHAT_KEY, activeChatId);
+      currentMessages = chat.messages.map(message => ({ ...message }));
+      renderMessages();
+      renderHistory();
+      updateChatTitle();
+      closeSidebar();
+    }
+
+    function deleteConversation(id) {
+      if (isSending) { showToast('উত্তর তৈরি হওয়া শেষ হলে চ্যাট মুছুন।'); return; }
+      const chat = conversations.find(item => item.id === id);
+      if (!chat) return;
+      if (!window.confirm('“' + chat.title + '” চ্যাটটি মুছে ফেলবেন? এটি আর ফেরত আনা যাবে না।')) return;
+      conversations = conversations.filter(item => item.id !== id);
+      if (activeChatId === id) {
+        activeChatId = null;
+        currentMessages = [];
+        localStorage.removeItem(ACTIVE_CHAT_KEY);
+        renderMessages();
+        updateChatTitle();
+      }
+      persistConversations();
+      renderHistory();
+    }
+
+    function formatDate(timestamp) {
+      const date = new Date(timestamp);
+      if (Number.isNaN(date.getTime())) return '';
+      const now = new Date();
+      const sameDay = date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() && date.getDate() === now.getDate();
+      return new Intl.DateTimeFormat('bn-BD', sameDay ? { hour: 'numeric', minute: '2-digit' } : { day: 'numeric', month: 'short' }).format(date);
+    }
+
+    function renderHistory() {
+      const list = document.getElementById('historyList');
+      const count = document.getElementById('historyCount');
+      const query = document.getElementById('historySearch').value.trim().toLocaleLowerCase();
+      list.replaceChildren();
+      count.textContent = String(conversations.length);
+      const filtered = conversations.filter(chat => {
+        if (!query) return true;
+        return chat.title.toLocaleLowerCase().includes(query) || chat.messages.some(message => message.content.toLocaleLowerCase().includes(query));
+      });
+      if (filtered.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'history-empty';
+        empty.textContent = conversations.length ? 'এই শব্দ দিয়ে কোনো চ্যাট পাওয়া যায়নি।' : 'এখনও কোনো চ্যাট সেভ হয়নি। নতুন চ্যাট শুরু করলে এখানে দেখা যাবে।';
+        list.appendChild(empty);
+        return;
+      }
+      filtered.forEach(chat => {
+        const entry = document.createElement('div');
+        entry.className = 'history-entry' + (chat.id === activeChatId ? ' active' : '');
+
+        const openButton = document.createElement('button');
+        openButton.type = 'button';
+        openButton.className = 'history-open';
+        openButton.disabled = isSending;
+        openButton.title = chat.title;
+        openButton.addEventListener('click', () => openConversation(chat.id));
+
+        const title = document.createElement('span');
+        title.className = 'history-title';
+        title.textContent = chat.title;
+        const meta = document.createElement('span');
+        meta.className = 'history-meta';
+        meta.textContent = formatDate(chat.updatedAt) + ' · ' + chat.messages.length + ' বার্তা';
+        openButton.append(title, meta);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'history-delete';
+        deleteButton.textContent = '×';
+        deleteButton.title = 'এই চ্যাট মুছুন';
+        deleteButton.setAttribute('aria-label', chat.title + ' মুছুন');
+        deleteButton.disabled = isSending;
+        deleteButton.addEventListener('click', () => deleteConversation(chat.id));
+
+        entry.append(openButton, deleteButton);
+        list.appendChild(entry);
+      });
+    }
+
+    function renderWelcome() {
+      const welcome = document.createElement('div');
+      welcome.className = 'welcome-state';
+      welcome.innerHTML = `
+        <div class="welcome-icon" aria-hidden="true">✦</div>
+        <h1>আজ কী তৈরি করবেন?</h1>
+        <p>কোড লিখুন, বাগ ঠিক করুন বা নতুন আইডিয়া নিয়ে আলোচনা করুন। বাংলা ও ইংরেজি—দুই ভাষাতেই প্রশ্ন করতে পারেন। আপনার প্রতিটি চ্যাট স্বয়ংক্রিয়ভাবে সেভ থাকবে।</p>
+        <div class="suggestion-grid">
+          <button class="suggestion-btn" type="button" data-prompt="একটি আধুনিক, মোবাইল-রেসপনসিভ ওয়েবসাইট তৈরি করতে সাহায্য করো।"><span>ওয়েবসাইট তৈরি</span>একটি রেসপনসিভ ওয়েবসাইটের পরিকল্পনা ও কোড</button>
+          <button class="suggestion-btn" type="button" data-prompt="আমার কোডের এই সমস্যাটি ডিবাগ করতে সাহায্য করো: "><span>কোড ডিবাগ</span>ত্রুটি খুঁজে কারণসহ সমাধান</button>
+          <button class="suggestion-btn" type="button" data-prompt="এই ধারণাটি সহজ বাংলায় বুঝিয়ে দাও: "><span>ধারণা বুঝুন</span>জটিল বিষয়ের সহজ ব্যাখ্যা</button>
+          <button class="suggestion-btn" type="button" data-prompt="আমার প্রজেক্টের জন্য পরিষ্কার ও ভালোভাবে সাজানো কোড লিখে দাও: "><span>কোড লিখুন</span>পরিষ্কার, ব্যবহারযোগ্য কোডের সাহায্য</button>
+        </div>`;
+      welcome.querySelectorAll('[data-prompt]').forEach(button => {
+        button.addEventListener('click', () => {
+          const input = document.getElementById('promptInput');
+          input.value = button.dataset.prompt;
+          autoGrowInput();
+          input.focus();
+        });
+      });
+      return welcome;
+    }
+
+    function renderMessages() {
+      const container = document.getElementById('messagesContainer');
+      container.replaceChildren();
+      if (currentMessages.length === 0) {
+        container.appendChild(renderWelcome());
+        return;
+      }
+      currentMessages.forEach(message => appendMessageUI(message.role, message.content, container));
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+    }
+
+    function renderInlineText(value) {
+      return escapeHtml(value)
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`\n]+)`/g, '<code>$1</code>')
+        .replace(/\r?\n/g, '<br>');
+    }
+
+    function formatText(text) {
+      const source = String(text);
+      const fence = /```([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n([\s\S]*?)```/g;
+      let result = '';
+      let cursor = 0;
+      let match;
+      while ((match = fence.exec(source)) !== null) {
+        result += renderInlineText(source.slice(cursor, match.index));
+        const language = escapeHtml(match[1] || 'code');
+        const code = escapeHtml(match[2].replace(/\n$/, ''));
+        result += '<pre><div class="code-top"><span>' + language + '</span><button class="copy-btn" type="button" onclick="copyCode(this)">কপি</button></div><code>' + code + '</code></pre>';
+        cursor = match.index + match[0].length;
+      }
+      result += renderInlineText(source.slice(cursor));
+      return result;
+    }
+
+    function appendMessageUI(role, text, parent = document.getElementById('messagesContainer')) {
+      const row = document.createElement('div');
+      row.className = 'message-row' + (role === 'user' ? ' user-row' : '');
+      const avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      avatar.textContent = role === 'user' ? 'আপনি' : 'AI';
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.innerHTML = formatText(text);
+      row.append(avatar, bubble);
+      parent.appendChild(row);
+      parent.scrollTop = parent.scrollHeight;
+      return bubble;
+    }
+
+    async function copyCode(button) {
+      const codeElement = button.closest('pre')?.querySelector('code');
+      if (!codeElement) return;
+      try {
+        await navigator.clipboard.writeText(codeElement.innerText);
+        button.textContent = 'কপি হয়েছে';
+        setTimeout(() => { if (button.isConnected) button.textContent = 'কপি'; }, 1600);
+      } catch (error) {
+        showToast('কপি করা যায়নি। কোডটি সিলেক্ট করে কপি করুন।');
+      }
+    }
+
+    function autoGrowInput() {
+      const input = document.getElementById('promptInput');
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 180) + 'px';
+    }
+
+    function handleKeyDown(event) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
         sendPrompt();
       }
     }
 
-    function escapeHtml(str) {
-      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
-
-    function copyCode(btn) {
-      const code = btn.parentElement.nextElementSibling.innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.innerText = 'Copied!';
-        setTimeout(() => btn.innerText = 'Copy', 2000);
-      });
-    }
-
-    function formatText(text) {
-      text = text.replace(/```([a-zA-Z0-9]*)\n([\s\S]*?)```/g, (match, lang, code) => {
-        return `<pre><div class="code-top"><span>${lang || 'code'}</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><code>${escapeHtml(code.trim())}</code></pre>`;
-      });
-      text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
-      text = text.replace(/\n/g, '<br/>');
-      return text;
-    }
-
-    function appendMessageUI(role, text) {
-      const box = document.getElementById('messagesContainer');
-      const row = document.createElement('div');
-      row.className = `message-row ${role === 'user' ? 'user-row' : ''}`;
-      row.innerHTML = `<div class="avatar ${role}">${role === 'user' ? 'U' : 'AI'}</div><div class="bubble">${formatText(text)}</div>`;
-      box.appendChild(row);
-      box.scrollTop = box.scrollHeight;
-      return row.querySelector('.bubble');
-    }
-
     async function sendPrompt() {
-      if (!API_KEY) {
-        openSettings();
-        alert('দয়া করে Settings-এ গিয়ে আপনার OpenRouter API Key বসিয়ে নিন।');
-        return;
-      }
-
+      if (isSending) return;
       const input = document.getElementById('promptInput');
-      const sendBtn = document.getElementById('sendBtn');
       const text = input.value.trim();
       if (!text) return;
+      if (!API_KEY) {
+        openSettings();
+        showToast('চ্যাট শুরু করতে Settings-এ OpenRouter API key দিন।');
+        return;
+      }
+      if (!AVAILABLE_MODELS.includes(MODEL)) {
+        MODEL = DEFAULT_MODEL;
+        localStorage.setItem('openrouter_model', MODEL);
+        updateModelLabel();
+      }
 
-      appendMessageUI('user', text);
-      currentMessages.push({ role: "user", content: text });
+      if (!activeChatId || !getActiveConversation()) createConversation();
+      currentMessages.push({ role: 'user', content: text });
       input.value = '';
-      sendBtn.disabled = true;
+      autoGrowInput();
+      saveActiveConversation(true);
+      renderMessages();
 
-      const aiBubble = appendMessageUI('assistant', 'প্রসেস হচ্ছে...');
+      isSending = true;
+      const sendButton = document.getElementById('sendBtn');
+      const newChatButton = document.getElementById('newChatBtn');
+      sendButton.disabled = true;
+      newChatButton.disabled = true;
+      renderHistory();
+      const pendingBubble = appendMessageUI('assistant', 'উত্তর তৈরি হচ্ছে…');
+      pendingBubble.classList.add('pending');
 
       try {
-        const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-          method: "POST",
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
           headers: {
-            "Authorization": `Bearer ${API_KEY}`,
-            "Content-Type": "application/json",
-            "HTTP-Referer": window.location.origin,
-            "X-Title": "AI Dev Client"
+            'Authorization': 'Bearer ' + API_KEY,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': window.location.origin,
+            'X-Title': 'AI Developer Workspace'
           },
           body: JSON.stringify({
             model: MODEL,
-            messages: [
-              {
-                role: "system",
-                content: "You are an expert full-stack developer and AI assistant. The user can speak in Bengali or English. When the user asks in Bengali, explain concepts in fluent Bengali, but provide full, production-ready code with clear comments. When asked to build a website or app, write complete HTML, CSS, JavaScript, or backend code directly inside formatted markdown code blocks. Always provide practical, working code solutions."
-              },
-              ...currentMessages
-            ]
+            messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...currentMessages]
           })
         });
 
-        const data = await res.json();
-        if (data.choices && data.choices[0]?.message?.content) {
-          const reply = data.choices[0].message.content;
-          aiBubble.innerHTML = formatText(reply);
-          currentMessages.push({ role: 'assistant', content: reply });
-        } else {
-          aiBubble.innerHTML = `<span style="color:var(--accent-red)">ত্রুটি: ${data.error?.message || JSON.stringify(data)}</span>`;
+        let data = {};
+        try { data = await response.json(); } catch (error) { data = {}; }
+        if (!response.ok) {
+          throw new Error(data?.error?.message || 'API অনুরোধ ব্যর্থ হয়েছে (HTTP ' + response.status + ')');
         }
-      } catch (err) {
-        aiBubble.innerHTML = `<span style="color:var(--accent-red)">কানেকশন এরর: ${err.message}</span>`;
+        const rawReply = data?.choices?.[0]?.message?.content;
+        const reply = typeof rawReply === 'string'
+          ? rawReply
+          : Array.isArray(rawReply)
+            ? rawReply.map(item => typeof item === 'string' ? item : (item?.text || '')).join('\n')
+            : '';
+        if (!reply.trim()) throw new Error(data?.error?.message || 'মডেল থেকে কোনো উত্তর পাওয়া যায়নি।');
+
+        currentMessages.push({ role: 'assistant', content: reply });
+        saveActiveConversation(true);
+        renderMessages();
+      } catch (error) {
+        pendingBubble.classList.remove('pending');
+        pendingBubble.classList.add('error');
+        pendingBubble.textContent = 'ত্রুটি: ' + (error?.message || 'সংযোগ করা যায়নি। API key, মডেল ও নেটওয়ার্ক পরীক্ষা করুন।');
+        showToast('উত্তর পাওয়া যায়নি। আপনার পাঠানো বার্তাটি চ্যাটে সেভ আছে।');
       } finally {
-        sendBtn.disabled = false;
+        isSending = false;
+        sendButton.disabled = false;
+        newChatButton.disabled = false;
+        renderHistory();
       }
     }
+
+    function exportHistory() {
+      if (conversations.length === 0) {
+        showToast('ব্যাকআপ নেওয়ার মতো কোনো চ্যাট নেই।');
+        return;
+      }
+      const backup = {
+        exportedAt: new Date().toISOString(),
+        application: 'AI Developer Workspace',
+        conversations
+      };
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'ai-chat-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showToast('চ্যাটের ব্যাকআপ ডাউনলোড হয়েছে।');
+    }
+
+    initialize();
   </script>
 </body>
 </html>
