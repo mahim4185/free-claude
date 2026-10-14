@@ -256,10 +256,10 @@
       <div class="form-group">
         <label>AI মডেল (কোডিং ও বাংলায় সেরা)</label>
         <select id="settingModel">
-          <option value="deepseek/deepseek-r1:free">DeepSeek R1 (কোডিং ও লজিকে সেরা - ফ্রি)</option>
-          <option value="meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B (বাংলা ও দ্রুতগতির - ফ্রি)</option>
-          <option value="google/gemini-2.0-flash-lite:free">Gemini 2.0 Flash Lite (ফ্রি)</option>
-          <option value="qwen/qwen-2.5-coder-32b-instruct:free">Qwen 2.5 Coder (ওয়েব ডেভেলপমেন্ট স্পেশাল)</option>
+          <option value="openrouter/free">OpenRouter Free Router (সুপারিশকৃত)</option>
+          <option value="google/gemma-4-31b-it:free">Google Gemma 4 31B (ফ্রি)</option>
+          <option value="nvidia/nemotron-3.5-lightning:free">NVIDIA Nemotron 3.5 Lightning (ফ্রি)</option>
+          <option value="cohere/north-mini-code:free">Cohere North Mini Code (কোডিং - ফ্রি)</option>
         </select>
       </div>
       <button class="save-btn" onclick="saveSettings()">Save & Connect</button>
@@ -268,7 +268,21 @@
 
   <script>
     let API_KEY = localStorage.getItem('openrouter_key') || '';
-    let MODEL = localStorage.getItem('openrouter_model') || 'deepseek/deepseek-r1:free';
+    const DEFAULT_MODEL = 'openrouter/free';
+    const AVAILABLE_MODELS = [
+      'openrouter/free',
+      'google/gemma-4-31b-it:free',
+      'nvidia/nemotron-3.5-lightning:free',
+      'cohere/north-mini-code:free'
+    ];
+    let MODEL = localStorage.getItem('openrouter_model') || DEFAULT_MODEL;
+
+    // পুরোনো/অকার্যকর মডেল আইডি থাকলে স্বয়ংক্রিয়ভাবে নতুন ডিফল্ট মডেলে বদলায়।
+    if (!AVAILABLE_MODELS.includes(MODEL)) {
+      MODEL = DEFAULT_MODEL;
+      localStorage.setItem('openrouter_model', MODEL);
+    }
+
     let currentMessages = [];
 
     window.onload = () => {
@@ -289,6 +303,10 @@
     function saveSettings() {
       API_KEY = document.getElementById('settingApiKey').value.trim();
       MODEL = document.getElementById('settingModel').value;
+      if (!MODEL) {
+        alert('দয়া করে একটি AI মডেল নির্বাচন করুন।');
+        return;
+      }
       localStorage.setItem('openrouter_key', API_KEY);
       localStorage.setItem('openrouter_model', MODEL);
       updateModelLabel();
