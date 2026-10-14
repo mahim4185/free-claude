@@ -1,0 +1,12 @@
+{
+  "name": "free-claude-web",
+  "version": "1.0.0",
+  "description": "Free Claude Code Web UI Client",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
